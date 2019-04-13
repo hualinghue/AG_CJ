@@ -139,7 +139,7 @@ class Collect(object):
                 self.ftp.cwd("/%s/%s" % (site_name, item))
                 self.logs.write_err({"title": "%s  %s" % (item, self.ftp.nlst())})
                 for i in self.ftp.nlst():
-                    val_list = self.download_file(i, site_name, last_time)
+                    val_list = self.download_file(i, site_name, item)
                     self.write_mongo(val_list, site_name, i)
 
 
