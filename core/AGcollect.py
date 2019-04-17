@@ -82,7 +82,7 @@ class Collect(object):
     def write_mongo(self,date_list,site_name,file_name):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
-        for data in date_list
+        for data in date_list:
             db_date_id = self.mongo_obj[site_name].find_one(data)
             if not db_date_id:
                 aa = table_obj.insert(date_list)
