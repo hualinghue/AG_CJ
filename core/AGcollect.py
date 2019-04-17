@@ -3,6 +3,7 @@ import datetime,json,re,os
 from conf import settings
 from . import log_handle
 from pymongo import MongoClient
+from . import proofread
 
 class Collect(object):
     def __init__(self):
@@ -146,5 +147,9 @@ class Collect(object):
                     val_list = self.download_file(i, site_name, item)
                     if val_list:
                         self.write_mongo(val_list, site_name, i)
+    def _proofread(self):
+        self.link_ftp()
+        pro_obj =proofread.Proofread(ftp_obj=self.ftp,mongo_obj=self.mongo_obj)
+        pro_obj.handle("20190416","AGIN")
 
 
