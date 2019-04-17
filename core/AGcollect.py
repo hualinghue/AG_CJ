@@ -83,8 +83,10 @@ class Collect(object):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
         for data in date_list:
-            print(data["billNo"])
-            db_date_id = table_obj.find_one(data)
+            if site_name == "AGIN":
+                db_date_id = table_obj.find_one({"bilNo":data["bilNo"]})
+            else:
+                db_date_id = table_obj.find_one(data)
             if not db_date_id:
                 aa = table_obj.insert(date_list)
                 print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
