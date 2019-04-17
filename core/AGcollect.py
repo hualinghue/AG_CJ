@@ -161,13 +161,14 @@ class Collect(object):
         for file_name in file_list:
             if file_name in download_file_list:
                 if file_name in od:
-                    with open(path, 'r') as f:
+                    print(file_name)
+                    with open("%s/%s"%(path,file_name), 'r') as f:
                         file_lines_list = f.readlines()
                         print(file_lines_list)
                         self.write_mongo(file_lines_list, site_name, file_name)
-            else:
-                file_list = self.download_file(file_name, site_name, time)
-                if file_list:
-                    self.write_mongo(file_list, site_name, file_name)
+            # else:
+            #     file_list = self.download_file(file_name, site_name, time)
+            #     if file_list:
+            #         self.write_mongo(file_list, site_name, file_name)
 
 
