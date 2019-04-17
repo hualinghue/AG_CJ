@@ -88,6 +88,7 @@ class Collect(object):
             print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
             self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
         else:
+            self.logs.write_err({"title": "mongo%s已存在"%db_date_id,"name":file_name})
             print("mongo%s已存在"%db_date_id)
     def link_ftp(self):
         #连接ftp
