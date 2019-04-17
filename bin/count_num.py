@@ -12,11 +12,9 @@ for item in file_Iterator:
                 time_Iterator = os.walk("%s/%s/%s" % (path, file_name,time))
                 for t in time_Iterator:
                     for file in t[2]:
-                        print("%s/%s/%s/%s"%(path,file_name,time,file))
                         with open("%s/%s/%s/%s"%(path,file_name,time,file),'r') as f:
-
-                            read_all = f.readlines()
-                            num += len(read_all)
-
+                            for i in f.readlines():
+                                if i != "run_ok":
+                                    num += 1
         re_dic[file_name] = num
 print(re_dic)

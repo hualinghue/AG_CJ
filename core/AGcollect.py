@@ -94,7 +94,7 @@ class Collect(object):
         if run_TF:
             aa = table_obj.insert(date_list)
             print("mongo写入%s/%s共%s条"%(site_name,file_name,len(aa)))
-            self.logs.write_acc({"title": "mongo写入%s共%s条"%(file_path,len(aa)), "data": "ok"})
+            self.logs.write_acc({"title": "mongo写入%s"%(file_path), "data": len(aa)})
             with open(file_path, "a") as f:
                 f.write("run_ok")
 
