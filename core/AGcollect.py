@@ -20,6 +20,7 @@ class Collect(object):
                 self.ftp.close()
     def collect_handle(self):
         #采集
+        self.ftp.cwd("/")
         allFileName = self.ftp.nlst()  # //列举出远程FTP下的文件夹的名字
         site_obj = self.get_last_time()   #获取上次执行过的文件名
         for lists in allFileName:
