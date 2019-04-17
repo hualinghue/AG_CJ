@@ -17,5 +17,5 @@ for item in file_Iterator:
                                 if i != "run_ok":
                                     num += 1
         re_dic[file_name] = num
-        break
+    break
 print(re_dic)
