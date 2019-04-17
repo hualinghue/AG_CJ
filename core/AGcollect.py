@@ -159,6 +159,7 @@ class Collect(object):
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
+            print(file_name,download_file_list)
             if file_name in download_file_list:
                 print(file_name,od)
                 if file_name in od:
