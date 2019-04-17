@@ -207,9 +207,9 @@ class Collect(object):
         for file_name in file_list:
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
-                    if f.readlines()[len(f.readlines())] != "run_ok":
-                        f.seek(0, 0)
-                        file_lines_list = self.analyze_xml(f.readlines())
+                    file_lines_list = self.analyze_xml(f.readlines())
+                    print(file_lines_list[len(file_lines_list)])
+                    if file_lines_list[len(file_lines_list)] != "run_ok":
                         self.write_mongo(file_lines_list, site_name, file_name,time)
             else:
                 file_list = self.download_file(file_name, site_name, time)
