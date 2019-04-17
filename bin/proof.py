@@ -6,4 +6,4 @@ from core import AGcollect
 
 if __name__ == "__main__":
     client = AGcollect.Collect()
-    client._proofread()
+    client._proofread("20190416",'AGIN')
