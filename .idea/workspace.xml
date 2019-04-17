@@ -19,7 +19,7 @@
       <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="288">
               <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
@@ -29,13 +29,13 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="164" column="55" lean-forward="true" selection-start-line="164" selection-start-column="55" selection-end-line="164" selection-end-column="55" />
+            <state relative-caret-position="601">
+              <caret line="169" column="76" lean-forward="true" selection-start-line="169" selection-start-column="76" selection-end-line="169" selection-end-column="76" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#328#754#0" expanded="false" />
                 <element signature="e#793#1769#0" expanded="false" />
                 <element signature="e#1839#2156#0" expanded="false" />
-                <element signature="e#2219#3041#0" expanded="false" />
                 <element signature="e#3087#3420#0" expanded="false" />
                 <element signature="e#3978#4335#0" expanded="false" />
                 <element signature="e#4370#4947#0" expanded="false" />
@@ -325,9 +325,9 @@
           <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />
@@ -352,9 +352,9 @@
           <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />
@@ -427,9 +427,9 @@
           <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />
@@ -470,9 +470,9 @@
           <caret line="80" column="40" lean-forward="true" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />
@@ -521,9 +521,9 @@
           <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />
@@ -538,14 +538,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="1491" column="8" lean-forward="false" selection-start-line="1491" selection-start-column="8" selection-end-line="1491" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -647,14 +639,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/proof.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/log_handle.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -663,15 +647,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bin/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/proof.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="164" column="55" lean-forward="true" selection-start-line="164" selection-start-column="55" selection-end-line="164" selection-end-column="55" />
+        <state relative-caret-position="601">
+          <caret line="169" column="76" lean-forward="true" selection-start-line="169" selection-start-column="76" selection-end-line="169" selection-end-column="76" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#328#754#0" expanded="false" />
             <element signature="e#793#1769#0" expanded="false" />
             <element signature="e#1839#2156#0" expanded="false" />
-            <element signature="e#2219#3041#0" expanded="false" />
             <element signature="e#3087#3420#0" expanded="false" />
             <element signature="e#3978#4335#0" expanded="false" />
             <element signature="e#4370#4947#0" expanded="false" />

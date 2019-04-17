@@ -162,8 +162,8 @@ class Collect(object):
             if file_name in download_file_list:
                 if file_name in od:
                     with open("%s/%s"%(path,file_name), 'r') as f:
-                        file_lines_list = f.readlines()
-                        print(file_lines_list)
+                        file_lines_list = self.analyze_xml(f.readlines())
+                        print(len(file_lines_list))
                         if file_lines_list:
                             self.write_mongo(file_lines_list, site_name, file_name)
             # else:
