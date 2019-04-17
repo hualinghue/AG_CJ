@@ -9,13 +9,12 @@ class Collect(object):
         self.logs = log_handle.Log_handle()
         self.link_mongo()
         self.last_time = 0
-        self.forever_run()
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
                 print(datetime.datetime.now().timestamp(),"   开始采集")
                 self.link_ftp()
-                self.now_time = (datetime.datetime.now()-datetime.timedelta(hours=8)).strftime("%Y%m%d")
+                self.now_time = (datetime.datetime.now()-datetime.timedelta(hours=12)).strftime("%Y%m%d")
                 self.collect_handle()
                 self.last_time = datetime.datetime.now().timestamp()
                 self.ftp.close()
@@ -33,7 +32,8 @@ class Collect(object):
                     for file_name in site_list:
                         self.ftp.cwd("/%s/%s" % (lists, self.now_time))
                         val_list = self.download_file(file_name,lists,self.now_time)     #下载文件
-                        self.write_mongo(val_list,lists,file_name)             #写入mongo
+                        if val_list:
+                            self.write_mongo(val_list,lists,file_name)             #写入mongo
                     else:
                         site_obj[lists] = file_name         #最后一个文件名存入文件中
         self.update_last_time(site_obj)
@@ -65,6 +65,7 @@ class Collect(object):
             print("下载文件%s失败"%file_name)
             print(e)
             self.logs.write_err({"title":"下载文件%s失败"%file_name})
+            return False
         # os.remove("../files/%s"%file_name)
         return re_list
     def analyze_xml(self,file_list):
@@ -83,15 +84,16 @@ class Collect(object):
         table_obj = self.mongo_obj[site_name]
         db_date_id = self.mongo_obj[site_name].find_one(date_list[0])
         if not db_date_id:
-            print("mongo写入%s/%s"%(site_name,file_name))
-            self.logs.write_acc({"title": "mongo写入%s/%s"%(site_name,file_name), "data": "ok"})
-            table_obj.insert(date_list)
+            aa = table_obj.insert(date_list)
+            print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
+            self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
     def link_ftp(self):
         #连接ftp
         self.ftp = ftplib.FTP()
         try:
             self.ftp.connect(settings.host, settings.port, settings.timeout)
             self.ftp.login(settings.userName, settings.passWord)
+            print("连接FTP成功")
         except Exception as e:
             print("连接FTP失败")
             print(e)
@@ -108,6 +110,7 @@ class Collect(object):
         try:
             db.authenticate(user,pwd)
             self.mongo_obj = db
+            print("连接mongo成功")
         except Exception as e:
             print('连接mongo失败',e)
             self.logs.write_err({"title": "连接mongo失败", "data": e})
@@ -133,13 +136,15 @@ class Collect(object):
                 over_file = file_list[file_list.index(file_name)+1:]
                 for itme in over_file:
                     val_list = self.download_file(itme,site_name,last_time)
-                    self.write_mongo(val_list,site_name,itme)
+                    if val_list:
+                        self.write_mongo(val_list,site_name,itme)
             last_to_now = timePT_list[timePT_list.index(last_time)+1:timePT_list.index(self.now_time)]   #获取上一次执行日期到今天之间的日期
             for item in last_to_now:
                 self.ftp.cwd("/%s/%s" % (site_name, item))
                 self.logs.write_err({"title": "%s  %s" % (item, self.ftp.nlst())})
                 for i in self.ftp.nlst():
                     val_list = self.download_file(i, site_name, item)
-                    self.write_mongo(val_list, site_name, i)
+                    if val_list:
+                        self.write_mongo(val_list, site_name, i)
 
 

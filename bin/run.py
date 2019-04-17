@@ -6,3 +6,4 @@ from core import AGcollect
 
 if __name__ == "__main__":
     client = AGcollect.Collect()
+    client.forever_run()
