@@ -83,13 +83,14 @@ class Collect(object):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
         for data in date_list:
-            db_date_id = self.mongo_obj[site_name].find_one(data)
+            print(data)
+            db_date_id = table_obj.find_one(data)
             if not db_date_id:
                 aa = table_obj.insert(date_list)
                 print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
                 self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
             else:
-                self.logs.write_err({"title": "mongo:%s/%s  %s已存在"%(site_name,file_name,data["billNo"])})
+                self.logs.write_err({"title": "mongo:%s/%s  %s已存在"%(site_name,file_name,data)})s
     def link_ftp(self):
         #连接ftp
         self.ftp = ftplib.FTP()
