@@ -190,8 +190,8 @@ class Collect(object):
                     if val_list:
                         self.write_mongo(val_list, site_name, i,item)
     def _proofread(self):
-        time = self.sys_args[1]
-        site_name = self.sys_args[2]
+        time = self.sys_args[2]
+        site_name = self.sys_args[1]
         self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
         file_Iterator = os.walk(path)
