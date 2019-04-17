@@ -21,9 +21,9 @@ class Collect(object):
         file_Iterator = os.walk(path)
         download_file_list = []
         for item in file_Iterator:
-            print(item)
-            download_file_list = item[2]
-        print(download_file_list)
+            print(item[1])
+            download_file_list = item[1]
+        print(download_file_list,self.sys_args[1])
         if self.sys_args[1] not in download_file_list:
             print("参数1错误")
             return
