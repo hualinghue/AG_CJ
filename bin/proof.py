@@ -5,5 +5,5 @@ sys.path.append(BASE_DIR)
 from core import AGcollect
 
 if __name__ == "__main__":
-    client = AGcollect.Collect()
+    client = AGcollect.Collect(sys.argv)
     client._proofread("20190416",'AGIN')

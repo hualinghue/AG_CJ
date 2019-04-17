@@ -5,10 +5,15 @@ from . import log_handle
 from pymongo import MongoClient
 
 class Collect(object):
-    def __init__(self):
+    def __init__(self,sys_args):
+        self.sys_args=sys_args
         self.logs = log_handle.Log_handle()
         self.link_mongo()
         self.last_time = 0
+        self.command_allowcator()
+    def command_allowcator(self):
+        '''分检用户输入的不同指令'''
+        print(self.sys_args)
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
@@ -179,9 +184,11 @@ class Collect(object):
         download_file_list = []
         for item in file_Iterator:
             download_file_list = item[2]
+        print(download_file_list)
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
+            print(file_name)
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
                     if f.readlines()[len(f.readlines())] != "run_ok":
@@ -191,5 +198,7 @@ class Collect(object):
                 file_list = self.download_file(file_name, site_name, time)
                 if file_list:
                     self.write_mongo(file_list, site_name, file_name,time)
+                else:
+                    self.logs.write_err({"title": "文件下载有误",'data':file_list})
 
 
