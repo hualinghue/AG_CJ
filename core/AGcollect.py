@@ -26,6 +26,7 @@ class Collect(object):
         if self.sys_args[1] not in download_file_list:
             print("参数1错误")
             return
+        self._proofread()
 
     def forever_run(self):
         while True:
