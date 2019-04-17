@@ -166,9 +166,9 @@ class Collect(object):
                         print(file_lines_list)
                         if file_lines_list:
                             self.write_mongo(file_lines_list, site_name, file_name)
-            # else:
-            #     file_list = self.download_file(file_name, site_name, time)
-            #     if file_list:
-            #         self.write_mongo(file_list, site_name, file_name)
+            else:
+                file_list = self.download_file(file_name, site_name, time)
+                if file_list:
+                    self.write_mongo(file_list, site_name, file_name)
 
 
