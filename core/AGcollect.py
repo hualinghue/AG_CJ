@@ -87,6 +87,8 @@ class Collect(object):
             aa = table_obj.insert(date_list)
             print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
             self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
+        else:
+            print("mongo%s已存在"%db_date_id)
     def link_ftp(self):
         #连接ftp
         self.ftp = ftplib.FTP()
@@ -147,6 +149,7 @@ class Collect(object):
                     if val_list:
                         self.write_mongo(val_list, site_name, i)
     def _proofread(self, time, site_name):
+        od = ['201904160620.xml','201904160622.xml']
         self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
         file_Iterator = os.walk(path)
@@ -157,9 +160,11 @@ class Collect(object):
         file_list = self.ftp.nlst()
         for file_name in file_list:
             if file_name in download_file_list:
-                with open(path, 'r') as f:
-                    file_lines_list = f.readlines()
-                    self.write_mongo(file_lines_list, site_name, file_name)
+                if file_name in od:
+                    with open(path, 'r') as f:
+                        file_lines_list = f.readlines()
+                        print(file_lines_list)
+                        self.write_mongo(file_lines_list, site_name, file_name)
             else:
                 file_list = self.download_file(file_name, site_name, time)
                 if file_list:
