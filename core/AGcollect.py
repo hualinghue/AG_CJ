@@ -104,13 +104,11 @@ class Collect(object):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
         file_path = "../files/%s/%s/%s"%(site_name,time,file_name)
-        run_TF = True
         with open(file_path,"r") as f:
-            for item in f.readline():
-                if item == "run_ok":
-                    run_TF = False
-                    self.logs.write_err({"title": "mongo:%s已执行" % (file_path)})
-        if run_TF:
+            file_line = f.readline()
+        if file_line[-1] == "run_ok":
+            self.logs.write_err({"title": "mongo:%s已执行" % (file_path)})
+        else:
             aa = table_obj.insert(date_list)
             print("mongo写入%s/%s共%s条"%(site_name,file_name,len(aa)))
             self.logs.write_acc({"title": "mongo写入%s"%(file_path), "data": len(aa)})
@@ -207,10 +205,9 @@ class Collect(object):
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
                     file_lines = f.readlines()
-                    print(file_lines[-1])
-                    # if f.readlines()[len(file_lines)] != "run_ok":
-                    #     file_lines_list = self.analyze_xml(file_lines)
-                    #     self.write_mongo(file_lines_list, site_name, file_name,time)
+                    if file_lines[-1] != "run_ok":
+                        file_lines_list = self.analyze_xml(file_lines)
+                        self.write_mongo(file_lines_list, site_name, file_name,time)
             else:
                 file_list = self.download_file(file_name, site_name, time)
                 if file_list:
