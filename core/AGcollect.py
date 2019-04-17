@@ -82,7 +82,7 @@ class Collect(object):
     def write_mongo(self,date_list,site_name,file_name,time):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
-        file_path = "/%s/%s/%s"%(site_name,time,file_name)
+        file_path = "../files/%s/%s/%s"%(site_name,time,file_name)
         run_TF = True
         with open(file_path,"r") as f:
             for item in f.readline():
