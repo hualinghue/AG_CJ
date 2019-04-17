@@ -33,7 +33,7 @@ class Collect(object):
                         self.ftp.cwd("/%s/%s" % (lists, self.now_time))
                         val_list = self.download_file(file_name,lists,self.now_time)     #下载文件
                         if val_list:
-                            self.write_mongo(val_list,lists,file_name)             #写入mongo
+                            self.write_mongo(val_list,lists,file_name,self.now_time)             #写入mongo
                     else:
                         site_obj[lists] = file_name         #最后一个文件名存入文件中
         self.update_last_time(site_obj)
@@ -79,20 +79,38 @@ class Collect(object):
                 req_dic[key.replace(' ','')] = value.strip('"')
             re_list.append(req_dic)
         return re_list
-    def write_mongo(self,date_list,site_name,file_name):
+    def write_mongo(self,date_list,site_name,file_name,time):
         #写入mongo
         table_obj = self.mongo_obj[site_name]
-        for data in date_list:
-            if site_name == "AGIN":
-                db_date_id = table_obj.find_one({"billNo":data["billNo"]})
-            else:
-                db_date_id = table_obj.find_one(data)
-            if not db_date_id:
-                aa = table_obj.insert(date_list)
-                print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
-                self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
-            else:
-                self.logs.write_err({"title": "mongo:%s/%s  %s已存在"%(site_name,file_name,data)})
+        file_path = "/%s/%s/%s"%(site_name,time,file_name)
+        run_TF = True
+        with open(file_path,"r") as f:
+            for item in f.readline():
+                if item == "run_ok":
+                    run_TF = False
+                    self.logs.write_err({"title": "mongo:%s已执行" % (file_path)})
+        if run_TF:
+            aa = table_obj.insert(date_list)
+            print("mongo写入%s/%s共%s条"%(site_name,file_name,len(aa)))
+            self.logs.write_acc({"title": "mongo写入%s共%s条"%(file_path,len(aa)), "data": "ok"})
+            with open(file_path, "a") as f:
+                f.write("run_ok")
+
+        # for data in date_list:
+        #     if site_name == "AGIN":
+        #         try:
+        #             db_date_id = table_obj.find_one({"billNo":data["billNo"]})
+        #         except KeyError as e:
+        #             db_date_id = table_obj.find_one({"tradeNo": data["tradeNo"]})
+        #     else:
+        #         db_date_id = table_obj.find_one(data)
+        #     if not db_date_id:
+        #         aa = table_obj.insert(date_list)
+        #         print("mongo写入%s/%s"%(site_name,file_name,),len(date_list),len(aa))
+        #         self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
+        #     else:
+        #         self.logs.write_err({"title": "mongo:%s/%s  %s已存在"%(site_name,file_name,data)})
+
     def link_ftp(self):
         #连接ftp
         self.ftp = ftplib.FTP()
@@ -143,7 +161,7 @@ class Collect(object):
                 for itme in over_file:
                     val_list = self.download_file(itme,site_name,last_time)
                     if val_list:
-                        self.write_mongo(val_list,site_name,itme)
+                        self.write_mongo(val_list,site_name,itme,last_time)
             last_to_now = timePT_list[timePT_list.index(last_time)+1:timePT_list.index(self.now_time)]   #获取上一次执行日期到今天之间的日期
             for item in last_to_now:
                 self.ftp.cwd("/%s/%s" % (site_name, item))
@@ -151,9 +169,8 @@ class Collect(object):
                 for i in self.ftp.nlst():
                     val_list = self.download_file(i, site_name, item)
                     if val_list:
-                        self.write_mongo(val_list, site_name, i)
+                        self.write_mongo(val_list, site_name, i,item)
     def _proofread(self, time, site_name):
-        od = ['201904160620.xml','201904160622.xml']
         self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
         file_Iterator = os.walk(path)
@@ -164,15 +181,13 @@ class Collect(object):
         file_list = self.ftp.nlst()
         for file_name in file_list:
             if file_name in download_file_list:
-                if file_name in od:
-                    with open("%s/%s"%(path,file_name), 'r') as f:
+                with open("%s/%s"%(path,file_name), 'r') as f:
+                    if f.readlines()[len(f.readlines())] != "run_ok":
                         file_lines_list = self.analyze_xml(f.readlines())
-                        print(len(file_lines_list))
-                        if file_lines_list:
-                            self.write_mongo(file_lines_list, site_name, file_name)
-            # else:
-            #     file_list = self.download_file(file_name, site_name, time)
-            #     if file_list:
-            #         self.write_mongo(file_list, site_name, file_name)
+                        self.write_mongo(file_lines_list, site_name, file_name,time)
+            else:
+                file_list = self.download_file(file_name, site_name, time)
+                if file_list:
+                    self.write_mongo(file_list, site_name, file_name,time)
 
 
