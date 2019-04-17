@@ -21,9 +21,8 @@ class Collect(object):
         file_Iterator = os.walk(path)
         download_file_list = []
         for item in file_Iterator:
-            print(item[1])
             download_file_list = item[1]
-        print(download_file_list,self.sys_args[1])
+            break
         if self.sys_args[1] not in download_file_list:
             print("参数1错误")
             return
@@ -200,6 +199,7 @@ class Collect(object):
         download_file_list = []
         for item in file_Iterator:
             download_file_list = item[2]
+            break
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
