@@ -29,8 +29,8 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="161" column="47" lean-forward="true" selection-start-line="161" selection-start-column="47" selection-end-line="161" selection-end-column="47" />
+            <state relative-caret-position="457">
+              <caret line="162" column="35" lean-forward="true" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="35" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#793#1769#0" expanded="false" />
@@ -665,8 +665,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="161" column="47" lean-forward="true" selection-start-line="161" selection-start-column="47" selection-end-line="161" selection-end-column="47" />
+        <state relative-caret-position="457">
+          <caret line="162" column="35" lean-forward="true" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="35" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <element signature="e#793#1769#0" expanded="false" />

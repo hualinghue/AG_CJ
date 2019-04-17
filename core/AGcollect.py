@@ -160,6 +160,7 @@ class Collect(object):
         file_list = self.ftp.nlst()
         for file_name in file_list:
             if file_name in download_file_list:
+                print(file_name,od)
                 if file_name in od:
                     print(file_name)
                     with open("%s/%s"%(path,file_name), 'r') as f:
