@@ -1,9 +1,7 @@
 import os
+from . import AGcollect
 
-class Proofread(object):
-    def __init__(self,ftp_obj,mongo_obj):
-        self.ftp = ftp_obj
-        self.mongo = mongo_obj
+class Proofread(AGcollect):
     def handle(self,time,site_name):
         path = "../files/%s/%s" %(site_name,time)
         file_Iterator = os.walk(path)
@@ -16,10 +14,7 @@ class Proofread(object):
             if file_name in download_file_list:
                 with open(path,'r') as f:
                     file_lines_list = f.readlines()
-                    db_date_id = self.mongo[site_name].find_one(file_lines_list[0])
-                    if not db_date_id:
-                        aa= self.mongo.insert(file_lines_list)
-                        print("mongo写入%s/%s  %s  %s" % (site_name, file_name,len(file_lines_list),len(aa)))
+                    self.write_mongo(file_lines_list, site_name, file_name)
             else:
-                print("没有%s这个文件"%file_name)
+                self.download_file(file_name,site_name,time)
 
