@@ -201,15 +201,17 @@ class Collect(object):
         for item in file_Iterator:
             download_file_list = item[2]
             break
+        print(download_file_list)
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
-                    file_lines_list = self.analyze_xml(f.readlines())
-                    print(file_lines_list)
-                    if file_lines_list[len(file_lines_list)] != "run_ok":
-                        self.write_mongo(file_lines_list, site_name, file_name,time)
+                    file_lines = f.readlines()
+                    print(file_lines)
+                    # if f.readlines()[len(file_lines)] != "run_ok":
+                    #     file_lines_list = self.analyze_xml(file_lines)
+                    #     self.write_mongo(file_lines_list, site_name, file_name,time)
             else:
                 file_list = self.download_file(file_name, site_name, time)
                 if file_list:
