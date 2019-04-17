@@ -66,6 +66,7 @@ class Collect(object):
             print("下载文件%s失败"%file_name)
             print(e)
             self.logs.write_err({"title":"下载文件%s失败"%file_name})
+            self.ftp.cwd("/")
             return False
         # os.remove("../files/%s"%file_name)
         return re_list
