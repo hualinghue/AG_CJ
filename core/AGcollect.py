@@ -14,6 +14,18 @@ class Collect(object):
     def command_allowcator(self):
         '''分检用户输入的不同指令'''
         print(self.sys_args)
+        if len(self.sys_args)<3:
+            print("缺少参数")
+            return
+        path = "../files/"
+        file_Iterator = os.walk(path)
+        download_file_list = []
+        for item in file_Iterator:
+            download_file_list = item[2]
+        if self.sys_args[1] not in download_file_list:
+            print("参数1错误")
+            return
+
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
@@ -177,21 +189,22 @@ class Collect(object):
                     val_list = self.download_file(i, site_name, item)
                     if val_list:
                         self.write_mongo(val_list, site_name, i,item)
-    def _proofread(self, time, site_name):
+    def _proofread(self):
+        time = self.sys_args[1]
+        site_name = self.sys_args[2]
         self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
         file_Iterator = os.walk(path)
         download_file_list = []
         for item in file_Iterator:
             download_file_list = item[2]
-        print(download_file_list)
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
-            print(file_name)
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
                     if f.readlines()[len(f.readlines())] != "run_ok":
+                        f.seek(0, 0)
                         file_lines_list = self.analyze_xml(f.readlines())
                         self.write_mongo(file_lines_list, site_name, file_name,time)
             else:
