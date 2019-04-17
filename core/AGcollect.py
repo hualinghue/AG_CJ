@@ -84,7 +84,7 @@ class Collect(object):
         table_obj = self.mongo_obj[site_name]
         for data in date_list:
             if site_name == "AGIN":
-                db_date_id = table_obj.find_one({"bilNo":data["bilNo"]})
+                db_date_id = table_obj.find_one({"billNo":data["billNo"]})
             else:
                 db_date_id = table_obj.find_one(data)
             if not db_date_id:
