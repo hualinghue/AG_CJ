@@ -200,6 +200,7 @@ class Collect(object):
         for item in file_Iterator:
             download_file_list = item[2]
             break
+        print(download_file_list)
         self.ftp.cwd("/%s/%s" % (site_name, time))
         file_list = self.ftp.nlst()
         for file_name in file_list:
