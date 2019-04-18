@@ -167,7 +167,7 @@ class Collect(object):
         time = self.sys_args[2]
         site_name = self.sys_args[1]
         path = "../files/%s/%s" % (site_name, time)
-        download_file_list = self.get_path_file_name(path)
+        download_file_list = self.get_path_file_name(path) or []
         file_list = self.get_ftp_path_file_name("/%s/%s" % (site_name, time))
         for file_name in file_list:
             if file_name in download_file_list:
@@ -186,9 +186,7 @@ class Collect(object):
         self.update_last_time(site_obj)
     def get_path_file_name(self,path):
         """获取文件内容"""
-        file_Iterator = os.walk(path)
-        for item in file_Iterator:
-            print(item[2])
+        for item in os.walk(path):
             return item[2]
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
