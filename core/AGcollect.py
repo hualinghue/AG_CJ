@@ -23,6 +23,7 @@ class Collect(object):
         for item in file_Iterator:
             download_file_list = item[1]
             break
+        print(download_file_list)
         if self.sys_args[1]  in download_file_list:
             self._proofread()
         elif self.sys_args[1] == "start":
