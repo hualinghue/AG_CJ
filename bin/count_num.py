@@ -2,9 +2,9 @@ import os,re
 path = "../files/"
 file_Iterator = os.walk(path)
 re_dic = {}
+dataType = set()
 for item in file_Iterator:
     for file_name in item[1]:
-        dataType = set()
         num = 0
         files_Iterator = os.walk("%s/%s"%(path,file_name))
         for i in files_Iterator:
