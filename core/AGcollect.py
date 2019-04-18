@@ -9,6 +9,7 @@ class Collect(object):
         self.sys_args=sys_args
         self.logs = log_handle.Log_handle()
         self.link_mongo()
+        self.link_ftp()
         self.last_time = 0
         self.command_allowcator()
     def command_allowcator(self):
@@ -21,16 +22,18 @@ class Collect(object):
         if self.sys_args[1]  in download_file_list:
             self._proofread()
         elif self.sys_args[1] == "start":
+            self.ftp.close()
             self.forever_run()
         else:
+            self.ftp.close()
             print("参数1错误")
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
-                self.get_all_site_name()
-                print(self.all_site_name)
-                print(datetime.datetime.now().timestamp(),"   开始采集")
                 self.link_ftp()
+                self.get_all_site_name()
+                print("====",self.all_site_name,"=====")
+                print(datetime.datetime.now().timestamp(),"   开始采集")
                 self.now_time = (datetime.datetime.now()-datetime.timedelta(hours=12)).strftime("%Y%m%d")
                 self.collect_handle()
                 self.last_time = datetime.datetime.now().timestamp()
@@ -166,7 +169,6 @@ class Collect(object):
         site_obj = self.get_last_time()
         time = self.sys_args[2]
         site_name = self.sys_args[1]
-        self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
         download_file_list = self.get_path_file_name(path)
         file_list = self.get_ftp_path_file_name("/%s/%s" % (site_name, time))
