@@ -192,7 +192,13 @@ class Collect(object):
         """获取FTP内容"""
         self.ftp.cwd("/")
         self.ftp.cwd(path)
-        re_list = self.ftp.nlst()
+        try:
+            re_list = self.ftp.nlst()
+        except ftplib.error_proto as e:
+            self.ftp.close()
+            self.link_ftp()
+            self.ftp.cwd(path)
+            re_list = self.ftp.nlst()
         return re_list
     def get_all_site_name(self):
         """获取所有平台的名字"""
