@@ -21,7 +21,8 @@ for item in file_Iterator:
                                         key, value = j.split("=")
                                         req_dic[key.replace(' ', '')] = value.strip('"')
                                     dataType.add(req_dic["dataType"])
-                                    print(req_dic["dataType"])
+                                    if req_dic["dataType"] == "HTR" or req_dic["dataType"] == "HSR":
+                                        print(req_dic)
                                     num += 1
         re_dic[file_name] = num
     break
