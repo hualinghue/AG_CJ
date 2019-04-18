@@ -13,16 +13,10 @@ class Collect(object):
         self.command_allowcator()
     def command_allowcator(self):
         '''分检用户输入的不同指令'''
-        print(self.sys_args)
         if len(self.sys_args)<3:
             print("缺少参数")
             return
-        path = "../files/"
-        file_Iterator = os.walk(path)
-        download_file_list = []
-        for item in file_Iterator:
-            download_file_list = item[1]
-            break
+        download_file_list = self.get_ftp_path_file_name('/')
         print(download_file_list)
         if self.sys_args[1]  in download_file_list:
             self._proofread()
@@ -33,6 +27,8 @@ class Collect(object):
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
+                self.get_all_site_name()
+                print(self.all_site_name)
                 print(datetime.datetime.now().timestamp(),"   开始采集")
                 self.link_ftp()
                 self.now_time = (datetime.datetime.now()-datetime.timedelta(hours=12)).strftime("%Y%m%d")
@@ -139,6 +135,7 @@ class Collect(object):
             print(e)
             self.logs.write_err({"title": "连接FTP失败"})
     def link_mongo(self):
+        """连接mongo"""
         user = settings.DB_USER
         pwd = settings.DB_PASSWORD
         server = settings.DB_HOST
@@ -164,6 +161,10 @@ class Collect(object):
         with open("../conf/last_time.txt",'w') as f:
             f.write(json.dumps(data_obj))
     def _proofread(self):
+        """校队
+            参数一：平台代号(AG..)
+            参数二：校队日期
+        """
         site_obj = self.get_last_time()
         time = self.sys_args[2]
         site_name = self.sys_args[1]
@@ -187,12 +188,20 @@ class Collect(object):
                     self.logs.write_err({"title": "文件下载有误",'data':file_list})
         self.update_last_time(site_obj)
     def get_path_file_name(self,path):
+        """获取文件内容"""
         file_Iterator = os.walk(path)
         for item in file_Iterator:
             return item[2]
     def get_ftp_path_file_name(self, path):
+        """获取FTP内容"""
+        self.link_ftp()
         self.ftp.cwd("/")
         self.ftp.cwd(path)
-        return self.ftp.nlst()
+        re_list = self.ftp.nlst()
+        self.ftp.close()
+        return re_list
+    def get_all_site_name(self):
+        """获取所有平台的名字"""
+        self.all_site_name =  self.get_path_file_name("/")
 
 
