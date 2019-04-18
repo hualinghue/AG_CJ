@@ -22,6 +22,7 @@ for item in file_Iterator:
                                         req_dic[key.replace(' ', '')] = value.strip('"')
                                     if req_dic["dataType"] not in dataType:
                                         dataType.append(req_dic["dataType"])
+                                    print(req_dic["dataType"])
                                     num += 1
         re_dic[file_name] = num
     break
