@@ -29,7 +29,6 @@ class Collect(object):
             self.forever_run()
         else:
             print("参数1错误")
-
     def forever_run(self):
         while True:
             if datetime.datetime.now().timestamp() - self.last_time > settings.cj_interval:
@@ -41,33 +40,29 @@ class Collect(object):
                 self.ftp.close()
     def collect_handle(self):
         #采集
-        self.ftp.cwd("/")
-        allFileName = self.ftp.nlst()  # //列举出远程FTP下的文件夹的名字
+        allFileName = self.get_ftp_path_file_name("/")  # //列举出远程FTP下的文件夹的名字
         site_obj = self.get_last_time()   #获取上次执行过的文件名
         for lists in allFileName:
-            self.ftp.cwd("/" + lists)  # 进入目录
-            time_list = self.ftp.nlst()
+            time_list = self.get_ftp_path_file_name("/" + lists)
             if self.now_time in time_list:
-                self.ftp.cwd("/%s/%s" % (lists,self.now_time))
-                site_list = self.collect_list(self.ftp.nlst(),lists,site_obj)   #筛选出需要下载的文件名
+                site_list = self.collect_list(
+                    self.get_ftp_path_file_name("/%s/%s" % (lists,self.now_time))
+                    ,lists,site_obj
+                )   #筛选出需要下载的文件名
                 if site_list:
                     for file_name in site_list:
-                        self.ftp.cwd("/%s/%s" % (lists, self.now_time))
                         val_list = self.download_file(file_name,lists,self.now_time)     #下载文件
                         if val_list:
                             self.write_mongo(val_list,lists,file_name,self.now_time)             #写入mongo
                     else:
                         site_obj[lists] = file_name         #最后一个文件名存入文件中
         self.update_last_time(site_obj)
-        self.ftp.close()
     def collect_list(self,all_file_name,site_name,site_obj):
         ##返回需要下载的文件列表
         last_file_name = site_obj[site_name]
         if last_file_name in all_file_name:
             return all_file_name[all_file_name.index(last_file_name)+1:]
         else:
-            if last_file_name:
-                self.proofread(last_file_name, site_name)   #校队
             return all_file_name
     def download_file(self,file_name,site_name,time):
         ##下载FTP文件
@@ -131,7 +126,6 @@ class Collect(object):
         #         self.logs.write_acc({"title": "mongo写入%s/%s  %s  %s"%(site_name,file_name,len(date_list),len(aa)), "data": "ok"})
         #     else:
         #         self.logs.write_err({"title": "mongo:%s/%s  %s已存在"%(site_name,file_name,data)})
-
     def link_ftp(self):
         #连接ftp
         self.ftp = ftplib.FTP()
@@ -168,41 +162,14 @@ class Collect(object):
         #写入最后执行的文件名
         with open("../conf/last_time.txt",'w') as f:
             f.write(json.dumps(data_obj))
-    def proofread(self,file_name,site_name):
-        #上一次执行的文件不再今日文件列表进行校队
-        print("校队：/%s/%s"%(site_name,file_name))
-        last_time = file_name[0:8]     #获取文件日期
-        self.ftp.cwd("/"+site_name)
-        timePT_list = self.ftp.nlst()
-        if last_time in timePT_list:
-            self.ftp.cwd("/%s/%s"%(site_name,last_time))
-            file_list = self.ftp.nlst()
-            if file_name in file_list:
-                over_file = file_list[file_list.index(file_name)+1:]
-                for itme in over_file:
-                    val_list = self.download_file(itme,site_name,last_time)
-                    if val_list:
-                        self.write_mongo(val_list,site_name,itme,last_time)
-            last_to_now = timePT_list[timePT_list.index(last_time)+1:timePT_list.index(self.now_time)]   #获取上一次执行日期到今天之间的日期
-            for item in last_to_now:
-                self.ftp.cwd("/%s/%s" % (site_name, item))
-                self.logs.write_err({"title": "%s  %s" % (item, self.ftp.nlst())})
-                for i in self.ftp.nlst():
-                    val_list = self.download_file(i, site_name, item)
-                    if val_list:
-                        self.write_mongo(val_list, site_name, i,item)
     def _proofread(self):
+        site_obj = self.get_last_time()
         time = self.sys_args[2]
         site_name = self.sys_args[1]
         self.link_ftp()
         path = "../files/%s/%s" % (site_name, time)
-        file_Iterator = os.walk(path)
-        download_file_list = []
-        for item in file_Iterator:
-            download_file_list = item[2]
-            break
-        self.ftp.cwd("/%s/%s" % (site_name, time))
-        file_list = self.ftp.nlst()
+        download_file_list = self.get_path_file_name(path)
+        file_list = self.get_ftp_path_file_name("/%s/%s" % (site_name, time))
         for file_name in file_list:
             if file_name in download_file_list:
                 with open("%s/%s"%(path,file_name), 'r') as f:
@@ -214,7 +181,17 @@ class Collect(object):
                 file_list = self.download_file(file_name, site_name, time)
                 if file_list:
                     self.write_mongo(file_list, site_name, file_name,time)
+                    site_obj[site_name] = file_name
                 else:
                     self.logs.write_err({"title": "文件下载有误",'data':file_list})
+        self.update_last_time(site_obj)
+    def get_path_file_name(self,path):
+        file_Iterator = os.walk(path)
+        for item in file_Iterator:
+            return item[2]
+    def get_ftp_path_file_name(self, path):
+        self.ftp.cwd("/")
+        self.ftp.cwd(path)
+        return self.ftp.nlst()
 
 
