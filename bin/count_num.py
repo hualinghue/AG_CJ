@@ -4,7 +4,7 @@ file_Iterator = os.walk(path)
 re_dic = {}
 for item in file_Iterator:
     for file_name in item[1]:
-        dataType = []
+        dataType = set()
         num = 0
         files_Iterator = os.walk("%s/%s"%(path,file_name))
         for i in files_Iterator:
@@ -21,7 +21,7 @@ for item in file_Iterator:
                                         key, value = j.split("=")
                                         req_dic[key.replace(' ', '')] = value.strip('"')
                                     if req_dic["dataType"] not in dataType:
-                                        dataType.append(req_dic["dataType"])
+                                        dataType.add(req_dic["dataType"])
                                     print(req_dic["dataType"])
                                     num += 1
         re_dic[file_name] = num
