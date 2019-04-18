@@ -20,8 +20,7 @@ for item in file_Iterator:
                                     for j in tmp_list:
                                         key, value = j.split("=")
                                         req_dic[key.replace(' ', '')] = value.strip('"')
-                                    if req_dic["dataType"] not in dataType:
-                                        dataType.add(req_dic["dataType"])
+                                    dataType.add(req_dic["dataType"])
                                     print(req_dic["dataType"])
                                     num += 1
         re_dic[file_name] = num
