@@ -4,7 +4,7 @@ path = "../files/"
 file_Iterator = os.walk(path)
 re_dic = {}
 for item in file_Iterator:
-    for file_name in item[2]:
+    for file_name in item[1]:
         num = 0
         files_Iterator = os.walk("%s/%s"%(path,file_name))
         for i in files_Iterator:

@@ -188,6 +188,7 @@ class Collect(object):
         """获取文件内容"""
         file_Iterator = os.walk(path)
         for item in file_Iterator:
+            print(item[2])
             return item[2]
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
