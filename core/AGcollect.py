@@ -64,7 +64,6 @@ class Collect(object):
     def download_file(self,file_name,site_name,time):
         ##下载FTP文件
         bufsize = 1024
-        re_list = []
         file_path = "../files/%s/%s" % (site_name,time)
         if not os.path.exists(file_path):
             os.makedirs(file_path)
@@ -79,7 +78,6 @@ class Collect(object):
             print("下载文件%s失败"%file_name)
             print(e)
             self.logs.write_err({"title":"下载文件%s失败"%file_name})
-            self.ftp.cwd("/")
             return False
         # os.remove("../files/%s"%file_name)
         return re_list
@@ -194,11 +192,9 @@ class Collect(object):
             return item[2]
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
-        self.link_ftp()
         self.ftp.cwd("/")
         self.ftp.cwd(path)
         re_list = self.ftp.nlst()
-        self.ftp.close()
         return re_list
     def get_all_site_name(self):
         """获取所有平台的名字"""
