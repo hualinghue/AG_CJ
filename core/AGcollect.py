@@ -18,7 +18,6 @@ class Collect(object):
             print("缺少参数")
             return
         download_file_list = self.get_ftp_path_file_name('/')
-        print(download_file_list)
         if self.sys_args[1]  in download_file_list:
             self._proofread()
         elif self.sys_args[1] == "start":
@@ -200,6 +199,6 @@ class Collect(object):
         return re_list
     def get_all_site_name(self):
         """获取所有平台的名字"""
-        self.all_site_name =  self.get_path_file_name("/")
+        self.all_site_name =  self.get_ftp_path_file_name("/")
 
 
