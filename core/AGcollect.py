@@ -18,7 +18,7 @@ class Collect(object):
         elif self.sys_args[1] == "start":
             self.forever_run()
         elif self.sys_args[1].isupper():
-            collect_obj = Collect_handle(self.now_time)
+            collect_obj = Collect_handle(self.sys_args[2])
             collect_obj.proofread(time=self.sys_args[2],site_name=self.sys_args[1])
         else:
             print("参数1错误")
