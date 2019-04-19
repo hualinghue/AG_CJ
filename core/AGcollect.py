@@ -180,7 +180,7 @@ class Collect_handle(object):
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         print("%s/%s文件执行成功" % (site_name, file_name))
     def get_web_num(self,username):
-        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(A-Z+)",username)
+        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12([A-Z]+)",username)
         if req_name:
             return req_name.group(1)
         else:
