@@ -15,7 +15,7 @@ DB_NAME = "video_cj"
 DB_HOST = "10.8.63.117"
 
 DATA_TYPE = {
-        "BR":"billNO",    #下注记录
+        "BR":"billNo",    #下注记录
         "HSR":"tradeNo",   #捕鱼王转账记录
         "HPR":"transferId",  #捕鱼王养鱼游戏记录
         "EBR":"billNO",   #电子游戏下注记录
