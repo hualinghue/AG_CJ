@@ -41,7 +41,8 @@ class Collect_handle(object):
         for site_name in self.all_site_name:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if self.now_time not in time_list:
-                self.proofread(site_name,time_list[-1])        #校队
+                if time_list:
+                    self.proofread(site_name,time_list[-1])        #校队
             else:
                 self.collect("/%s/%s/"%(site_name,self.now_time),site_name)    #采集
             self.update_last_time(self.site_obj)
