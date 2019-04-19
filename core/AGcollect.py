@@ -143,13 +143,13 @@ class Collect_handle(object):
                 date["siteNo"] = web_num
                 if table_obj.insert(date):
                     judge = True
-                    print("mongo：%s写入%s:%s成功")
+                    print("mongo：%s写入%s:%s成功" %(table_name,dataType,only_ID))
                     self.logs.write_acc("mongo：%s写入%s:%s成功" %(table_name,dataType,only_ID))
                 else:
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
             else:
-                self.logs.write_repeat("%s文件中的%s：%s重复" % (file_name, dataType, only_ID))
-        self.site_obj[site_name]=file_name if judge else self.logs.write_err("%s写入失败" % file_name)
+                self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
+        self.site_obj[site_name]=file_name if judge else self.logs.write_err("%s/%s写入失败" % (site_name,file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
