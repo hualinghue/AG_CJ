@@ -71,7 +71,7 @@ class Collect_handle(object):
         except Exception as e:
             print("连接FTP失败")
             print(e)
-            self.logs.write_err({"title": "连接FTP失败"})
+            self.logs.write_err( "连接FTP失败")
     def link_mongo(self):
         """连接mongo"""
         user = settings.DB_USER
@@ -88,7 +88,7 @@ class Collect_handle(object):
             print("连接mongo成功")
         except Exception as e:
             print('连接mongo失败',e)
-            self.logs.write_err({"title": "连接mongo失败", "data": e})
+            self.logs.write_err("连接mongo失败")
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
         self.ftp.cwd("/")
@@ -109,12 +109,11 @@ class Collect_handle(object):
     def download_file(self,file_name,site_name):
         ##下载FTP文件
         file_path = "../files/%s/%s" % (site_name,self.now_time)
-
         if not os.path.exists(file_path):       #判断文件夹是否存在
             os.makedirs(file_path)
         with open("%s/%s"%(file_path,file_name),"wb+") as f:
             print("下载/%s/%s"%(site_name,file_name))
-            # self.logs.write_acc({"title": "下载/%s/%s"%(site_name,file_name), "data": "ok"})
+            # self.logs.write_acc("下载/%s/%s"%(site_name,file_name))
             self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
             f.seek(0,0)
             file_line = f.readlines()
@@ -135,7 +134,6 @@ class Collect_handle(object):
         judge = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
-            print(date["dataType"])
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
@@ -145,6 +143,7 @@ class Collect_handle(object):
                 date["siteNo"] = web_num
                 if table_obj.insert(date):
                     judge = True
+                    print("mongo：%s写入%s:%s成功")
                     self.logs.write_acc("mongo：%s写入%s:%s成功" %(table_name,dataType,only_ID))
                 else:
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
@@ -152,7 +151,7 @@ class Collect_handle(object):
                 self.logs.write_repeat("%s文件中的%s：%s重复" % (file_name, dataType, only_ID))
         self.site_obj[site_name]=file_name if judge else self.logs.write_err("%s写入失败" % file_name)
     def get_web_num(self,username):
-        req_name = re.search(r"m12([A-Z]+)",username) or re.search(r"M12(\d\d\d)",username)
+        req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
             return req_name.group(1)
         else:
