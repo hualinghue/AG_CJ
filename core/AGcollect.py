@@ -152,7 +152,7 @@ class Collect_handle(object):
                 self.logs.write_repeat("%s文件中的%s：%s重复" % (file_name, dataType, only_ID))
         self.site_obj[site_name]=file_name if judge else self.logs.write_err("%s写入失败" % file_name)
     def get_web_num(self,username):
-        req_name = re.search(r"m12([A-Z]+)",username)
+        req_name = re.search(r"m12([A-Z]+)",username) or re.search(r"M12(\d\d\d)",username)
         if req_name:
             return req_name.group(1)
         else:
