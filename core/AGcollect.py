@@ -132,24 +132,31 @@ class Collect_handle(object):
         return re_list
     def write_mongo(self,date_list,site_name,file_name):
         #写入mongo
+        print("mongo准备写入%s/%s"% (site_name, file_name))
         self.site_obj[site_name] = file_name
+        judge_write = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
             table_obj = self.mongo_obj[table_name]
-
             if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
                 date["siteNo"] = web_num
                 if table_obj.insert(date):
-                    judge = True
-                    print("mongo：%s写入%s:%s成功" %(table_name,dataType,only_ID))
-                    self.logs.write_acc("mongo：%s写入%s:%s成功" %(table_name,dataType,only_ID))
+                    judge_write = True
                 else:
+                    print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
             else:
+                print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
+        if not judge_write:
+            print("%s/%s文件以执行" % (site_name,file_name))
+            self.logs.write_err("%s/%s文件以执行" % (site_name,file_name))
+        else:
+            print("%s/%s文件执行成功" % (site_name, file_name))
+            self.logs.write_acc("%s/%s文件执行成功" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
