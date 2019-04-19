@@ -135,6 +135,7 @@ class Collect_handle(object):
         judge = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
+            print(date["dataType"])
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
