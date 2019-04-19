@@ -134,6 +134,7 @@ class Collect_handle(object):
         #写入mongo
         judge = False
         for date in date_list:
+            print(date)
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             print(date["dataType"])
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
