@@ -162,7 +162,7 @@ class Collect_handle(object):
                 print("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
                 self.logs.write_err("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
                 continue
-            elif web_num.isdigit():
+            elif web_num.isalpha():
                 continue
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
