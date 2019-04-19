@@ -8,6 +8,7 @@ class Collect(object):
     def __init__(self,sys_args):
         self.sys_args=sys_args
         self.last_time = 0
+        self.old_time = (datetime.datetime.now() - datetime.timedelta(hours=12)).strftime("%Y%m%d")
         self.command_allowcator()
     def command_allowcator(self):
         '''分检用户输入的不同指令'''
@@ -16,6 +17,9 @@ class Collect(object):
             return
         elif self.sys_args[1] == "start":
             self.forever_run()
+        elif self.sys_args[1].isupper():
+            collect_obj = Collect_handle(self.now_time)
+            collect_obj.proofread(time=self.sys_args[2],site_name=self.sys_args[1])
         else:
             print("参数1错误")
     def forever_run(self):
@@ -24,7 +28,11 @@ class Collect(object):
                 print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),"   开始采集")
                 self.now_time = (datetime.datetime.now()-datetime.timedelta(hours=12)).strftime("%Y%m%d")
                 collect_obj = Collect_handle(self.now_time)
-                collect_obj.handle()
+                if self.old_time !=self.now_time:
+                    self.old_time = self.now_time
+                    collect_obj.proofread(time=self.old_time)
+                else:
+                    collect_obj.handle()
                 self.last_time = datetime.datetime.now().timestamp()
 
 
@@ -40,16 +48,13 @@ class Collect_handle(object):
     def handle(self):
         for site_name in self.all_site_name:
             time_list = self.get_ftp_path_file_name("/" + site_name)
-            if self.now_time not in time_list:
-                if time_list:
-                    self.proofread(site_name,time_list[-1])        #校队
-            else:
+            if self.now_time in time_list:
                 self.collect("/%s/%s/"%(site_name,self.now_time),site_name)    #采集
             self.update_last_time(self.site_obj)
-    def collect(self, path, site_name):
+    def collect(self, path, site_name,proofread=False):
         file_list = self.get_ftp_path_file_name(path)
         last_file = self.site_obj[site_name]
-        if last_file in file_list:
+        if last_file in file_list and not proofread:
             file_list = file_list[file_list.index(last_file)+1:]    #过滤已执行的文件
         for file in file_list:
             date_list = self.download_file(file,site_name)    #下载
@@ -106,16 +111,18 @@ class Collect_handle(object):
             re_list = self.ftp.nlst()
 
         return re_list
-    def proofread(self,site_name,time):
+    def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
-        time_list = self.get_ftp_path_file_name("/%s" % site_name)
-        if time not in time_list:
-            raise print("%s中无数据")
-        file_list = self.get_ftp_path_file_name("/%s/%s/"%(site_name,time))
-        for file in file_list:
-            date_list = self.download_file(file, site_name,proofread=True)  # 下载
-            self.write_mongo(date_list, site_name, file) if date_list else False
-    def download_file(self,file_name,site_name,proofread=False):
+        time_list = self.get_ftp_path_file_name("/" + site_name)
+        if site_name == "ALL":
+            for site_name in self.all_site_name:
+                if time in time_list:
+                    self.collect("/%s/%s/" % (site_name, time), site_name,proofread=True)  # 采集
+        else:
+            if time not in time_list or site_name not in self.all_site_name:
+                raise print("%s中无数据")
+            self.collect("/%s/%s/" % (site_name, time), site_name,proofread=True)  # 采集
+    def download_file(self,file_name,site_name):
         ##下载FTP文件
         file_path = "../files/%s/%s" % (site_name,self.now_time)
         if not os.path.exists(file_path):       #判断文件夹是否存在
@@ -151,6 +158,12 @@ class Collect_handle(object):
         self.site_obj[site_name] = file_name
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
+            if not web_num:
+                print("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
+                self.logs.write_err("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
+                continue
+            elif web_num.isdigit():
+                continue
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
@@ -160,17 +173,17 @@ class Collect_handle(object):
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
+                else:
+                    self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID))
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         print("%s/%s文件执行成功" % (site_name, file_name))
-        self.logs.write_acc("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
-        req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
+        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(A-Z+)",username)
         if req_name:
             return req_name.group(1)
         else:
-            self.logs.write_err("%s解析失败"%username)
             return "None"
     def get_all_site_name(self):
         """获取所有平台的名字"""
