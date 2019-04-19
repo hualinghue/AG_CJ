@@ -41,7 +41,7 @@ class Collect_handle(object):
         for site_name in self.all_site_name:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if self.now_time not in time_list:
-                self.proofread()        #校队
+                self.proofread(site_name,time_list[-1])        #校队
             else:
                 self.collect("/%s/%s/"%(site_name,self.now_time),site_name)    #采集
             self.update_last_time(self.site_obj)
@@ -105,21 +105,35 @@ class Collect_handle(object):
             re_list = self.ftp.nlst()
 
         return re_list
-    def proofread(self):
-        pass
-    def download_file(self,file_name,site_name):
+    def proofread(self,site_name,time):
+        print("校队%s-%s" % (site_name,time))
+        time_list = self.get_ftp_path_file_name("/%s" % site_name)
+        if time not in time_list:
+            raise print("%s中无数据")
+        file_list = self.get_ftp_path_file_name("/%s/%s/"%(site_name,time))
+        for file in file_list:
+            date_list = self.download_file(file, site_name,proofread=True)  # 下载
+            self.write_mongo(date_list, site_name, file) if date_list else False
+    def download_file(self,file_name,site_name,proofread=False):
         ##下载FTP文件
         file_path = "../files/%s/%s" % (site_name,self.now_time)
         if not os.path.exists(file_path):       #判断文件夹是否存在
             os.makedirs(file_path)
+        if os.path.exists("%s/%s"%(file_path,file_name)):    #判断文件是否存在
+            return False
         with open("%s/%s"%(file_path,file_name),"wb+") as f:
             print("下载/%s/%s"%(site_name,file_name))
-            # self.logs.write_acc("下载/%s/%s"%(site_name,file_name))
             self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
             f.seek(0,0)
-            file_line = f.readlines()
-            return self.analyze_xml(file_line) if file_line else self.logs.write_err("%s下载失败"%file_name)
-    def analyze_xml(self,file_list,many=True):
+            file_line = f.readlines()       #查看下载是否成功
+            if file_line:
+                return self.analyze_xml(file_line)
+            else:
+                os.remove("%s/%s"%(file_path,file_name))
+                print("%s下载失败"%file_name)
+                self.logs.write_err("%s下载失败"%file_name)
+                return False
+    def analyze_xml(self,file_list):
         ##解析xml数据
         re_list = []
         for line in file_list:
@@ -134,7 +148,6 @@ class Collect_handle(object):
         #写入mongo
         print("mongo准备写入%s/%s"% (site_name, file_name))
         self.site_obj[site_name] = file_name
-        judge_write = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
@@ -143,20 +156,14 @@ class Collect_handle(object):
             table_obj = self.mongo_obj[table_name]
             if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
                 date["siteNo"] = web_num
-                if table_obj.insert(date):
-                    judge_write = True
-                else:
+                if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
-        if not judge_write:
-            print("%s/%s文件以执行" % (site_name,file_name))
-            self.logs.write_err("%s/%s文件以执行" % (site_name,file_name))
-        else:
-            print("%s/%s文件执行成功" % (site_name, file_name))
-            self.logs.write_acc("%s/%s文件执行成功" % (site_name, file_name))
+        print("%s/%s文件执行成功" % (site_name, file_name))
+        self.logs.write_acc("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
