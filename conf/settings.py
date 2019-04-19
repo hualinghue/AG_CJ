@@ -19,6 +19,6 @@ DATA_TYPE = {
         "HSR":"tradeNo",   #捕鱼王转账记录
         "HPR":"transferId",  #捕鱼王养鱼游戏记录
         "EBR":"billNO",   #电子游戏下注记录
-        "TR":"transferId",  #户口转账记录
+        "TR":"tradeNo",  #户口转账记录
         "GR":"gmcode",     #游戏结果"GR"仅导出AGIN平台的真人视讯游戏相关数据
 }
