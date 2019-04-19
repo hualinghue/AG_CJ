@@ -184,7 +184,7 @@ class Collect_handle(object):
         if req_name:
             return req_name.group(1)
         else:
-            return "None"
+            return None
     def get_all_site_name(self):
         """获取所有平台的名字"""
         self.all_site_name =  self.get_ftp_path_file_name("/")
