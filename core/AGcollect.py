@@ -49,7 +49,7 @@ class Collect_handle(object):
         file_list = self.get_ftp_path_file_name(path)
         last_file = self.site_obj[site_name]
         if last_file in file_list:
-            file_list = file_list[file_list.index(last_file):]    #过滤已执行的文件
+            file_list = file_list[file_list.index(last_file)+1:]    #过滤已执行的文件
         for file in file_list:
             date_list = self.download_file(file,site_name)    #下载
             self.write_mongo(date_list,site_name,file) if date_list else False
