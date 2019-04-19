@@ -44,6 +44,7 @@ class Collect_handle(object):
                 self.proofread()        #校队
             else:
                 self.collect("/%s/%s/"%(site_name,self.now_time),site_name)    #采集
+            self.update_last_time(self.site_obj)
     def collect(self, path, site_name):
         file_list = self.get_ftp_path_file_name(path)
         last_file = self.site_obj[site_name]
@@ -131,7 +132,7 @@ class Collect_handle(object):
         return re_list
     def write_mongo(self,date_list,site_name,file_name):
         #写入mongo
-        judge = False
+        self.site_obj[site_name] = file_name
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
@@ -149,7 +150,6 @@ class Collect_handle(object):
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
             else:
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
-        self.site_obj[site_name]=file_name if judge else self.logs.write_err("%s/%s写入失败" % (site_name,file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12([A-Z]+)",username) or re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
