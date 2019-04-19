@@ -156,6 +156,7 @@ class Collect_handle(object):
         #写入mongo
         print("mongo准备写入%s/%s"% (site_name, file_name))
         self.site_obj[site_name] = file_name
+        judge_run = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             if not web_num:
@@ -174,11 +175,13 @@ class Collect_handle(object):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
                 else:
+                    judge_run = True
                     self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID))
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
-        print("%s/%s文件执行成功" % (site_name, file_name))
+        if not judge_run:print("无数据写入")
+        print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12([A-Z]+)",username)
         if req_name:
