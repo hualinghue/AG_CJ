@@ -105,7 +105,7 @@ class Collect_handle(object):
             self.ftp.cwd("/")
             self.ftp.cwd(path)
             re_list = self.ftp.nlst()
-        except ftplib.error_proto as e:
+        except (ftplib.error_proto,ftplib.error_perm) as e:
             self.logs.write_err("FTP:获取%s路径下的文件失败" % path)
             print("FTP:获取%s路径下的文件失败",e)
             self.ftp.close()
