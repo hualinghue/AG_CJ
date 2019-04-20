@@ -115,9 +115,9 @@ class Collect_handle(object):
         return re_list
     def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
-        print(site_name,type(site_name))
         time_list = self.get_ftp_path_file_name("/" + site_name)
         if site_name == "ALL":
+            print("------------")
             for site in self.all_site_name:
                 if time in time_list:
                     self.collect(site, time,proofread=True)  # 采集
