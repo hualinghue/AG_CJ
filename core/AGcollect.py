@@ -99,7 +99,6 @@ class Collect_handle(object):
             print('连接mongo失败',e)
             self.logs.write_err("连接mongo失败")
     def get_ftp_path_file_name(self, path):
-        print(path)
         """获取FTP内容"""
         try:
             self.ftp.cwd("/")
@@ -120,6 +119,7 @@ class Collect_handle(object):
                 time_list = self.get_ftp_path_file_name("/" + site)
                 if time in time_list:
                     self.collect(site, time,proofread=True)  # 采集
+                print("%s中没有%s文件"%(site,time))
         else:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if time not in time_list or site_name not in self.all_site_name:
@@ -167,14 +167,13 @@ class Collect_handle(object):
                 else:
                     self.logs.write_err("%s/%s中%s解析失败" % (site_name, file_name, date["playerName"]))
                 continue
-            elif web_num.isalpha():
-                continue
+            elif web_num.islower():
+                web_num.upper()
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
             table_obj = self.mongo_obj[table_name]
             if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
-                date["siteNo"] = web_num
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     if proofread:
@@ -196,7 +195,7 @@ class Collect_handle(object):
         if not judge_run:print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
-        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12([A-Z]+)",username)
+        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
         if req_name:
             return req_name.group(1)
         else:
