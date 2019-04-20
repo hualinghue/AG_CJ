@@ -178,7 +178,7 @@ class Collect_handle(object):
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     if proofread:
-                        self.logs.proofread_acc("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
+                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
                     else:
                         self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
                 else:
@@ -190,7 +190,7 @@ class Collect_handle(object):
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 if proofread:
-                    self.logs.proofread_acc("%s/%s文件中的%s：%s重复" % (site_name, file_name, dataType, only_ID))
+                    self.logs.proofread_err("%s/%s文件中的%s：%s重复" % (site_name, file_name, dataType, only_ID))
                 else:
                     self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         if not judge_run:print("无数据写入")
