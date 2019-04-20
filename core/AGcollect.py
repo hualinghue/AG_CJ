@@ -81,7 +81,7 @@ class Collect_handle(object):
         except Exception as e:
             print("连接FTP失败")
             print(e)
-            self.logs.write_err( "连接FTP失败")
+            self.logs.write_err( "连接FTP失败",self.now_time)
     def link_mongo(self):
         """连接mongo"""
         user = settings.DB_USER
@@ -98,7 +98,7 @@ class Collect_handle(object):
             print("连接mongo成功")
         except Exception as e:
             print('连接mongo失败',e)
-            self.logs.write_err("连接mongo失败")
+            self.logs.write_err("连接mongo失败",self.now_time)
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
         try:
@@ -106,7 +106,7 @@ class Collect_handle(object):
             self.ftp.cwd(path)
             re_list = self.ftp.nlst()
         except (ftplib.error_proto,ftplib.error_perm) as e:
-            self.logs.write_err("FTP:获取%s路径下的文件失败" % path)
+            self.logs.write_err("FTP:获取%s路径下的文件失败" % path,self.now_time)
             print("FTP:获取%s路径下的文件失败"%path,e)
             self.ftp.close()
             self.link_ftp()
@@ -140,9 +140,8 @@ class Collect_handle(object):
             if file_line:
                 return self.analyze_xml(file_line)
             else:
-                os.remove("%s/%s"%(file_path,file_name))
                 print("%s下载失败"%file_name)
-                self.logs.write_err("%s下载失败"%file_name)
+                self.logs.write_err("%s下载失败"%file_name,time)
                 return False
     def analyze_xml(self,file_list):
         ##解析xml数据
@@ -193,6 +192,7 @@ class Collect_handle(object):
                 repeat_list.append("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         if not judge_run:
             print("无数据写入")
+            self.logs.write_err("%s/%s无数据写入" % (site_name,file_name), time)
         else:
             for i in repeat_list:
                 if proofread:
