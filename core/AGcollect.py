@@ -115,11 +115,12 @@ class Collect_handle(object):
         return re_list
     def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
+        print(site_name,type(site_name))
         time_list = self.get_ftp_path_file_name("/" + site_name)
         if site_name == "ALL":
-            for site_name in self.all_site_name:
+            for site in self.all_site_name:
                 if time in time_list:
-                    self.collect(site_name, time,proofread=True)  # 采集
+                    self.collect(site, time,proofread=True)  # 采集
         else:
             if time not in time_list or site_name not in self.all_site_name:
                 raise print("%s中无数据"%site_name)
