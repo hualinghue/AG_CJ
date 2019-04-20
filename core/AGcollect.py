@@ -134,13 +134,13 @@ class Collect_handle(object):
             self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
             f.seek(0,0)
             file_line = f.readlines()       #查看下载是否成功
-            if file_line:
-                return self.analyze_xml(file_line)
-            else:
-                os.remove("%s/%s"%(file_path,file_name))
-                print("%s下载失败"%file_name)
-                self.logs.write_err("%s下载失败"%file_name)
-                return False
+        if file_line:
+            return self.analyze_xml(file_line)
+        else:
+            os.remove("%s/%s"%(file_path,file_name))
+            print("%s下载失败"%file_name)
+            self.logs.write_err("%s下载失败"%file_name)
+            return False
     def analyze_xml(self,file_list):
         ##解析xml数据
         re_list = []
