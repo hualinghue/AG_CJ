@@ -40,7 +40,6 @@ class Collect_handle(object):
     def __init__(self,now_time):
         self.logs = log_handle.Log_handle()
         self.now_time = now_time
-        self.site_obj = self.get_last_time()  # 获取上次执行过的文件名
         self.DATA_TYPE = settings.DATA_TYPE
         self.link_ftp()
         self.link_mongo()
@@ -100,6 +99,7 @@ class Collect_handle(object):
             print('连接mongo失败',e)
             self.logs.write_err("连接mongo失败")
     def get_ftp_path_file_name(self, path):
+        print(path)
         """获取FTP内容"""
         try:
             self.ftp.cwd("/")
