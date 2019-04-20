@@ -52,11 +52,11 @@ class Collect_handle(object):
                 if time_list[-1] =="lostAndfound" :
                     self.collect(site_name, "lostAndfound")  # 采集
                 self.collect(site_name, self.now_time)  # 采集
-    def collect(self, site_name, time):
+    def collect(self, site_name, time,proofread=False):
         file_list = self.get_ftp_path_file_name("/%s/%s"%(site_name,time))
         if not file_list:
             return False
-        if len(file_list) > settings.VALUE_NUM :
+        if len(file_list) > settings.VALUE_NUM and not proofread:
             file_list = file_list[-settings.VALUE_NUM:]
         for file in file_list:
             date_list = self.download_file(file,site_name,time)    #下载
@@ -118,11 +118,11 @@ class Collect_handle(object):
         if site_name == "ALL":
             for site_name in self.all_site_name:
                 if time in time_list:
-                    self.collect("/%s/%s/" % (site_name, time), site_name)  # 采集
+                    self.collect(site_name, time,proofread=True)  # 采集
         else:
             if time not in time_list or site_name not in self.all_site_name:
                 raise print("%s中无数据"%site_name)
-            self.collect("/%s/%s/" % (site_name, time), site_name)  # 采集
+            self.collect(site_name, time,proofread=True)  # 采集
     def download_file(self,file_name,site_name,time):
         ##下载FTP文件
         self.ftp.cwd("/%s/%s"%(site_name,time))
