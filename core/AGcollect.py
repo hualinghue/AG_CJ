@@ -49,16 +49,18 @@ class Collect_handle(object):
         for site_name in self.all_site_name:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if self.now_time in time_list:
-                self.collect("/%s/%s/"%(site_name,self.now_time),site_name)    #采集
-            self.update_last_time(self.site_obj)
-    def collect(self, path, site_name,proofread=False):
-        file_list = self.get_ftp_path_file_name(path)
-        last_file = self.site_obj[site_name]
-        if last_file in file_list and not proofread:
-            file_list = file_list[file_list.index(last_file)+1:]    #过滤已执行的文件
+                if time_list[-1] =="lostAndfound" :
+                    self.collect(site_name, "lostAndfound")  # 采集
+                self.collect(site_name, self.now_time)  # 采集
+    def collect(self, site_name, time):
+        file_list = self.get_ftp_path_file_name("/%s/%s"%(site_name,time))
+        if not file_list:
+            return False
+        if len(file_list) > settings.VALUE_NUM :
+            file_list = file_list[-settings.VALUE_NUM:]
         for file in file_list:
-            date_list = self.download_file(file,site_name)    #下载
-            self.write_mongo(date_list,site_name,file) if date_list else False
+            date_list = self.download_file(file,site_name,time)    #下载
+            self.write_mongo(date_list,site_name,file) if date_list else self.proofread(time,site_name)
     def get_last_time(self):
         #获取上次执行的文件名
         with open("../conf/last_time.txt") as f:
@@ -117,18 +119,17 @@ class Collect_handle(object):
         if site_name == "ALL":
             for site_name in self.all_site_name:
                 if time in time_list:
-                    self.collect("/%s/%s/" % (site_name, time), site_name,proofread=True)  # 采集
+                    self.collect("/%s/%s/" % (site_name, time), site_name)  # 采集
         else:
             if time not in time_list or site_name not in self.all_site_name:
-                raise print("%s中无数据")
-            self.collect("/%s/%s/" % (site_name, time), site_name,proofread=True)  # 采集
-    def download_file(self,file_name,site_name):
+                raise print("%s中无数据"%site_name)
+            self.collect("/%s/%s/" % (site_name, time), site_name)  # 采集
+    def download_file(self,file_name,site_name,time):
         ##下载FTP文件
-        file_path = "../files/%s/%s" % (site_name,self.now_time)
+        self.ftp.cwd("/%s/%s"%(site_name,time))
+        file_path = "../files/%s/%s" % (site_name,time)
         if not os.path.exists(file_path):       #判断文件夹是否存在
             os.makedirs(file_path)
-        if os.path.exists("%s/%s"%(file_path,file_name)):    #判断文件是否存在
-            return False
         with open("%s/%s"%(file_path,file_name),"wb+") as f:
             print("下载/%s/%s"%(site_name,file_name))
             self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
@@ -155,7 +156,6 @@ class Collect_handle(object):
     def write_mongo(self,date_list,site_name,file_name):
         #写入mongo
         print("mongo准备写入%s/%s"% (site_name, file_name))
-        self.site_obj[site_name] = file_name
         judge_run = False
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码

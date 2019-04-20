@@ -1,4 +1,4 @@
-
+VALUE_NUM=9
 
 cj_interval = 120            #监控间隔
 host = 'xm.gdcapi.com'      #ftp采集地址
