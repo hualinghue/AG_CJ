@@ -100,9 +100,9 @@ class Collect_handle(object):
             self.logs.write_err("连接mongo失败")
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
-        self.ftp.cwd("/")
-        self.ftp.cwd(path)
         try:
+            self.ftp.cwd("/")
+            self.ftp.cwd(path)
             re_list = self.ftp.nlst()
         except ftplib.error_proto as e:
             self.logs.write_err("FTP:获取%s路径下的文件失败" % path)
@@ -111,7 +111,6 @@ class Collect_handle(object):
             self.link_ftp()
             self.ftp.cwd(path)
             re_list = self.ftp.nlst()
-
         return re_list
     def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
