@@ -1,5 +1,7 @@
 import datetime
 class Log_handle(object):
+    def proofread(self,date):
+        self.write("../logs/proofread%s.log" % (datetime.datetime.now() - datetime.timedelta(hours=12)).strftime("%Y%m%d"),date)
     def write_err(self,date):
         self.write("../logs/error%s.log"%(datetime.datetime.now()-datetime.timedelta(hours=12)).strftime("%Y%m%d"),date)
     def write_acc(self,date):
