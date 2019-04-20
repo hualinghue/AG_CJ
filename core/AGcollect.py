@@ -107,22 +107,21 @@ class Collect_handle(object):
             re_list = self.ftp.nlst()
         except (ftplib.error_proto,ftplib.error_perm) as e:
             self.logs.write_err("FTP:获取%s路径下的文件失败" % path)
-            print("FTP:获取%s路径下的文件失败",e)
+            print("FTP:获取%s路径下的文件失败"%path,e)
             self.ftp.close()
             self.link_ftp()
             self.ftp.cwd(path)
             re_list = self.ftp.nlst()
         return re_list
-    def proofread(self,time,site_name="all"):
+    def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
-        time_list = self.get_ftp_path_file_name("/" + site_name)
-        if site_name == "all":
-            print("------------")
+        if site_name == "ALL":
             for site in self.all_site_name:
+                time_list = self.get_ftp_path_file_name("/" + site)
                 if time in time_list:
                     self.collect(site, time,proofread=True)  # 采集
         else:
-            print("===========")
+            time_list = self.get_ftp_path_file_name("/" + site_name)
             if time not in time_list or site_name not in self.all_site_name:
                 raise print("%s中无数据"%site_name)
             self.collect(site_name, time,proofread=True)  # 采集
