@@ -164,12 +164,12 @@ class Collect_handle(object):
             if not web_num:
                 print("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
                 if proofread:
-                    self.logs.proofread("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
+                    self.logs.proofread_err("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
                 else:
                     self.logs.write_err("%s/%s中%s解析失败" % (site_name, file_name, date["playerName"]))
                 continue
             elif web_num.islower():
-                web_num.upper()
+                web_num = web_num.upper()
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
             table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
@@ -178,19 +178,19 @@ class Collect_handle(object):
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     if proofread:
-                        self.logs.proofread("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
+                        self.logs.proofread_acc("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
                     else:
                         self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
                 else:
                     judge_run = True
                     if proofread:
-                        self.logs.proofread("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID))
+                        self.logs.proofread_acc("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID))
                     else:
                         self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID))
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
                 if proofread:
-                    self.logs.proofread("%s/%s文件中的%s：%s重复" % (site_name, file_name, dataType, only_ID))
+                    self.logs.proofread_acc("%s/%s文件中的%s：%s重复" % (site_name, file_name, dataType, only_ID))
                 else:
                     self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         if not judge_run:print("无数据写入")
