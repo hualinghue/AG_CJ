@@ -49,7 +49,8 @@ class Collect_handle(object):
         for site_name in self.all_site_name:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if self.now_time in time_list:
-                if time_list[-1] =="lostAndfound" :
+                if time_list[-1] =="lostAndfound":
+                    print("============lostAndfound=================")
                     self.collect(site_name, "lostAndfound")  # 采集
                 self.collect(site_name, self.now_time)  # 采集
     def collect(self, site_name, time,proofread=False):
