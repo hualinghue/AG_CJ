@@ -61,7 +61,7 @@ class Collect_handle(object):
             file_list = file_list[-settings.VALUE_NUM:]
         for file in file_list:
             date_list = self.download_file(file,site_name,time)    #下载
-            self.write_mongo(date_list,site_name,file,proofread=proofread) if date_list else self.proofread(time,site_name)
+            self.write_mongo(date_list,site_name,file,time,proofread=proofread) if date_list else self.proofread(time,site_name)
     def get_last_time(self):
         #获取上次执行的文件名
         with open("../conf/last_time.txt") as f:
@@ -155,18 +155,19 @@ class Collect_handle(object):
                 req_dic[key.replace(' ','')] = value.strip('"')
             re_list.append(req_dic)
         return re_list
-    def write_mongo(self,date_list,site_name,file_name,proofread=False):
+    def write_mongo(self,date_list,site_name,file_name,time,proofread=False):
         #写入mongo
         print("mongo准备写入%s/%s"% (site_name, file_name))
         judge_run = False
+        repeat_list = []
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             if not web_num:
                 print("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
                 if proofread:
-                    self.logs.proofread_err("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]))
+                    self.logs.proofread_err("%s/%s中%s解析失败" % (site_name,file_name,date["playerName"]),time)
                 else:
-                    self.logs.write_err("%s/%s中%s解析失败" % (site_name, file_name, date["playerName"]))
+                    self.logs.write_err("%s/%s中%s解析失败" % (site_name, file_name, date["playerName"]),time)
                 continue
             elif web_num.islower():
                 web_num = web_num.upper()
@@ -178,22 +179,26 @@ class Collect_handle(object):
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
                     if proofread:
-                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
+                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID),time)
                     else:
-                        self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID))
+                        self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID),time)
                 else:
                     judge_run = True
                     if proofread:
-                        self.logs.proofread_acc("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID))
+                        self.logs.proofread_acc("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID),time)
                     else:
-                        self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID))
+                        self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID),time)
             else:
                 print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
+                repeat_list.append("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
+        if not judge_run:
+            print("无数据写入")
+        else:
+            for i in repeat_list:
                 if proofread:
-                    self.logs.proofread_err("%s/%s文件中的%s：%s重复" % (site_name, file_name, dataType, only_ID))
+                    self.logs.proofread_err(i,time)
                 else:
-                    self.logs.write_repeat("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
-        if not judge_run:print("无数据写入")
+                    self.logs.write_repeat(i,time)
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
