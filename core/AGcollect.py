@@ -183,9 +183,9 @@ class Collect_handle(object):
                 else:
                     judge_run = True
                     if proofread:
-                        self.logs.proofread_acc("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID),time)
+                        self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType, only_ID),time)
                     else:
-                        self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID),time)
+                        self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType, only_ID),time)
         if not judge_run:
             print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))
