@@ -158,7 +158,6 @@ class Collect_handle(object):
         #写入mongo
         print("mongo准备写入%s/%s"% (site_name, file_name))
         judge_run = False
-        repeat_list = []
         for date in date_list:
             web_num = self.get_web_num(date["playerName"])      #获取网站编码
             if not web_num:
@@ -172,7 +171,7 @@ class Collect_handle(object):
                 web_num = web_num.upper()
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             only_ID = date[dataType]                            #获取数据的唯一键
-            table_name = "%s_%s_%s" %(site_name,date["dataType"],web_num)    #拼接集合表名
+            table_name = "AG_%s_%s" %(date["dataType"],web_num)    #拼接集合表名
             table_obj = self.mongo_obj[table_name]
             if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
                 if not table_obj.insert(date):
@@ -187,18 +186,8 @@ class Collect_handle(object):
                         self.logs.proofread_acc("mongo：%s/%s写入%s:%s成功" % (site_name, table_name, dataType, only_ID),time)
                     else:
                         self.logs.write_acc("mongo：%s/%s写入%s:%s成功" % (site_name,table_name, dataType, only_ID),time)
-            else:
-                print("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
-                repeat_list.append("%s/%s文件中的%s：%s重复" % (site_name,file_name, dataType, only_ID))
         if not judge_run:
             print("无数据写入")
-            self.logs.write_err("%s/%s无数据写入" % (site_name,file_name), time)
-        else:
-            for i in repeat_list:
-                if proofread:
-                    self.logs.proofread_err(i,time)
-                else:
-                    self.logs.write_repeat(i,time)
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
