@@ -173,6 +173,7 @@ class Collect_handle(object):
                 web_num = web_num.upper()
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             playformType = date["platformType"]
+            print(playformType,dataType)
             if dataType =="BR" and playformType == "YOPLAY":
                 table_name = "YOPLAY_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             else:
