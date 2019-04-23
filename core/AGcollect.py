@@ -50,7 +50,9 @@ class Collect_handle(object):
             if self.now_time in time_list:
                 if time_list[-1] =="lostAndfound":
                     print("============lostAndfound=================")
-                    self.collect(site_name, "lostAndfound")  # 采集
+                    lost_time_list = self.get_ftp_path_file_name("/%s/%s" + site_name)
+                    for i in lost_time_list:
+                        self.collect("%s/lostAndfound"%site_name, i)  # 采集
                     print("============lostAndfound=================")
                 self.collect(site_name, self.now_time)  # 采集
     def collect(self, site_name, time,proofread=False):
@@ -170,8 +172,12 @@ class Collect_handle(object):
             elif web_num.islower():
                 web_num = web_num.upper()
             dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
+            playformType = self.DATA_TYPE[date["playformType"]]
+            if dataType =="BR" and playformType == "YOPLAY":
+                table_name = "YOPLAY_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
+            else:
+                table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             only_ID = date[dataType]                            #获取数据的唯一键
-            table_name = "AG_%s_%s" %(date["dataType"],web_num)    #拼接集合表名
             table_obj = self.mongo_obj[table_name]
             if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
                 if not table_obj.insert(date):
