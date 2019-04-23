@@ -50,7 +50,7 @@ class Collect_handle(object):
             if self.now_time in time_list:
                 if time_list[-1] =="lostAndfound":
                     print("============lostAndfound=================")
-                    lost_time_list = self.get_ftp_path_file_name("/%s/%s" + site_name)
+                    lost_time_list = self.get_ftp_path_file_name("/%s/lostAndfound"%site_name)
                     for i in lost_time_list:
                         self.collect("%s/lostAndfound"%site_name, i)  # 采集
                     print("============lostAndfound=================")
