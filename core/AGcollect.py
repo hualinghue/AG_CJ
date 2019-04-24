@@ -104,17 +104,20 @@ class Collect_handle(object):
     def get_ftp_path_file_name(self, path):
         """获取FTP内容"""
         try:
-            self.ftp.cwd("/")
-            self.ftp.cwd(path)
-            re_list = self.ftp.nlst()
-        except (ftplib.error_proto,ftplib.error_perm) as e:
-            self.logs.write_err("FTP:获取%s路径下的文件失败" % path,self.now_time)
-            print("FTP:获取%s路径下的文件失败"%path,e)
-            self.ftp.close()
-            self.link_ftp()
-            self.ftp.cwd(path)
-            re_list = self.ftp.nlst()
-        return re_list
+            try:
+                self.ftp.cwd("/")
+                self.ftp.cwd(path)
+                re_list = self.ftp.nlst()
+            except (ftplib.error_proto,ftplib.error_perm) as e:
+                self.logs.write_err("FTP:获取%s路径下的文件失败" % path,self.now_time)
+                print("FTP:获取%s路径下的文件失败"%path,e)
+                self.ftp.close()
+                self.link_ftp()
+                self.ftp.cwd(path)
+                re_list = self.ftp.nlst()
+            return re_list
+        except Exception as e:
+            self.handle()
     def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
         if site_name == "ALL":
@@ -153,7 +156,10 @@ class Collect_handle(object):
             tmp_list = re.findall(' .*?=".*?"', str(line))
             for j in tmp_list:
                 key, value = j.split("=")
-                req_dic[key.replace(' ','')] = value.strip('"')
+                try:
+                    req_dic[key.replace(' ','')] = float(value.strip('"'))
+                except ValueError:
+                    req_dic[key.replace(' ', '')] = value.strip('"')
             re_list.append(req_dic)
         return re_list
     def write_mongo(self,date_list,site_name,file_name,time,proofread=False):
