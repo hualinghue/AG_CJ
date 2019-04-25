@@ -139,7 +139,11 @@ class Collect_handle(object):
             os.makedirs(file_path)
         with open("%s/%s"%(file_path,file_name),"wb") as f:
             print("下载/%s/%s"%(site_name,file_name))
-            self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
+            try:
+                self.ftp.retrbinary("RETR %s"%file_name,f.write,1024)
+            except Exception :
+                self.handle()
+                return False
         with open("%s/%s" % (file_path, file_name), "r") as f:
             file_line = f.readlines()       #查看下载是否成功
             if file_line:
