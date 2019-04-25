@@ -117,6 +117,8 @@ class Collect_handle(object):
                 re_list = self.ftp.nlst()
             return re_list
         except Exception as e:
+            self.ftp.close()
+            self.link_ftp()
             self.handle()
             return []
     def proofread(self,time,site_name="ALL"):
