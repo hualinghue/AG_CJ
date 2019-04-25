@@ -118,6 +118,7 @@ class Collect_handle(object):
             return re_list
         except Exception as e:
             self.handle()
+            return []
     def proofread(self,time,site_name="ALL"):
         print("校队%s-%s" % (site_name,time))
         if site_name == "ALL":
