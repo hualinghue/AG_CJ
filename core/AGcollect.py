@@ -182,8 +182,6 @@ class Collect_handle(object):
                 else:
                     self.logs.write_err("%s/%s中%s解析失败" % (site_name, file_name, date["playerName"]),time)
                 continue
-            elif web_num.islower():
-                web_num = web_num.upper()
             dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型对象
             playformType = date["platformType"]
             if date["dataType"] =="BR" and playformType == "YOPLAY":
@@ -220,7 +218,7 @@ class Collect_handle(object):
             print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
-        req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
+        req_name = re.search(r"[m|M]12(\d\d\d)",username)
         if req_name:
             return req_name.group(1)
         else:
