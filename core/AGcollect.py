@@ -184,27 +184,34 @@ class Collect_handle(object):
                 continue
             elif web_num.islower():
                 web_num = web_num.upper()
-            dataType = self.DATA_TYPE[date["dataType"]]         #获取数据类型
+            dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型
             playformType = date["platformType"]
             if date["dataType"] =="BR" and playformType == "YOPLAY":
-                table_name = "YOPLAY_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
+                table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
             else:
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
-            only_ID = date[dataType]                            #获取数据的唯一键
+            only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
             table_obj = self.mongo_obj[table_name]
-            if not table_obj.find_one({dataType:only_ID}):       #查询库中是否存在
+            if table_obj.count() == 0:
+                table_obj.create_index({dataType_obj["type"]})
+                print("===================%s======================="%table_name)
+
+            MDtime = date[dataType_obj["time"]]           #获取时间
+            BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
+            date["bjTime"] = BJtime.strptime('%Y-%m-%d %H:%M:%S')
+            if not table_obj.find_one({dataType_obj["type"]:only_ID}):       #查询库中是否存在
                 if not table_obj.insert(date):
-                    print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType, only_ID))
+                    print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType_obj["type"], only_ID))
                     if proofread:
-                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID),time)
+                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
                     else:
-                        self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType, only_ID),time)
+                        self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
                 else:
                     judge_run = True
                     if proofread:
-                        self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType, only_ID),time)
+                        self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType_obj["type"], only_ID),time)
                     else:
-                        self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType, only_ID),time)
+                        self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType_obj["type"], only_ID),time)
         if not judge_run:
             print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))

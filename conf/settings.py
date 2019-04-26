@@ -15,11 +15,11 @@ DB_NAME = "video_cj"
 DB_HOST = "10.8.63.117"
 
 DATA_TYPE = {
-        "BR":"billNo",    #下注记录
-        "HSR":"tradeNo",   #捕鱼王转账记录
-        "HPR":"transferId",  #捕鱼王养鱼游戏记录
-        "EBR":"billNo",   #电子游戏下注记录
-        "TR":"transferId",  #户口转账记录
-        "GR":"gmcode",     #游戏结果"GR"仅导出AGIN平台的真人视讯游戏相关数据
-        "HTR":"tradeNo",
+        "BR":{"type":"billNo", "time":"recalcuTime"},   #下注记录
+        "HSR":{"type":"tradeNo","time":"creationTime"},   #捕鱼王转账记录
+        "HPR":{"type":"tradeNo","time":"creationTime"},  #捕鱼王养鱼游戏记录
+        "EBR":{"type":"billNo", "time":"recalcuTime"},   #电子游戏下注记录
+        "TR":{"type":"transferId","time":"creationTime"},  #户口转账记录
+        "GR":{"type":"gmcode","time":"closetime"},           #游戏结果"GR"仅导出AGIN平台的真人视讯游戏相关数据
+        "HTR":{"type":"transferId","time":"creationTime"},
 }
