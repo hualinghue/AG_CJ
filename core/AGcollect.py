@@ -198,22 +198,28 @@ class Collect_handle(object):
             MDtime = date[dataType_obj["time"]]           #获取时间
             BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
             date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')
-            if not table_obj.find_one({dataType_obj["type"]:only_ID}):       #查询库中是否存在
-                if not table_obj.insert(date):
-                    print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType_obj["type"], only_ID))
-                    if proofread:
-                        self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
-                    else:
-                        self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
-                else:
-
-                    judge_run = True
-                    if proofread:
-                        self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType_obj["type"], only_ID),time)
-                    else:
-                        self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType_obj["type"], only_ID),time)
-        if not judge_run:
-            print("无数据写入")
+            try:
+                table_obj.insert(date)
+            except Exception as e:
+                print("重复=============")
+                print(e)
+            
+            # if not table_obj.find_one({dataType_obj["type"]:only_ID}):       #查询库中是否存在
+            #     if not table_obj.insert(date):
+            #         print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType_obj["type"], only_ID))
+            #         if proofread:
+            #             self.logs.proofread_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
+            #         else:
+            #             self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
+            #     else:
+            #
+            #         judge_run = True
+            #         if proofread:
+            #             self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType_obj["type"], only_ID),time)
+            #         else:
+            #             self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType_obj["type"], only_ID),time)
+        # if not judge_run:
+        #     print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
