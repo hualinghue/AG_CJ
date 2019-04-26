@@ -195,7 +195,7 @@ class Collect_handle(object):
 
             MDtime = date[dataType_obj["time"]]           #获取时间
             BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
-            date["bjTime"] = BJtime.strptime('%Y-%m-%d %H:%M:%S')
+            date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')
             if not table_obj.find_one({dataType_obj["type"]:only_ID}):       #查询库中是否存在
                 if not table_obj.insert(date):
                     print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType_obj["type"], only_ID))
