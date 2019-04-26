@@ -30,8 +30,8 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="183" column="24" lean-forward="false" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="24" />
+            <state relative-caret-position="367">
+              <caret line="185" column="24" lean-forward="false" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
               <folding>
                 <element signature="e#192#375#0" expanded="false" />
                 <element signature="e#418#811#0" expanded="false" />
@@ -46,7 +46,7 @@
                 <element signature="e#5049#5649#0" expanded="false" />
                 <element signature="e#5712#6552#0" expanded="false" />
                 <element signature="e#6598#7075#0" expanded="false" />
-                <element signature="e#10061#10139#0" expanded="false" />
+                <element signature="e#10163#10241#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -394,7 +394,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -425,7 +425,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -490,7 +490,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -530,7 +530,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -585,7 +585,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -668,14 +668,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/text.py" />
-    <entry file="file://$PROJECT_DIR$/bin/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/datetime.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -708,10 +700,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bin/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="183" column="24" lean-forward="false" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="24" />
+        <state relative-caret-position="367">
+          <caret line="185" column="24" lean-forward="false" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
           <folding>
             <element signature="e#192#375#0" expanded="false" />
             <element signature="e#418#811#0" expanded="false" />
@@ -726,7 +726,7 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#10061#10139#0" expanded="false" />
+            <element signature="e#10163#10241#0" expanded="false" />
           </folding>
         </state>
       </provider>
