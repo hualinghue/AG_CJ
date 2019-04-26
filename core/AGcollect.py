@@ -184,26 +184,24 @@ class Collect_handle(object):
                 continue
             elif web_num.islower():
                 web_num = web_num.upper()
-            dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型
+            dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型对象
             playformType = date["platformType"]
             if date["dataType"] =="BR" and playformType == "YOPLAY":
                 table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
             else:
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
-            only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
+            # only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
             table_obj = self.mongo_obj[table_name]
-            if table_obj.count() == 0:
+            if table_obj.count() == 0:              #获取索引
                 table_obj.ensure_index(dataType_obj["type"], unique=True)
-                print("===================%s=======================" % table_name)
             MDtime = date[dataType_obj["time"]]           #获取时间
             BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
-            date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')
+            date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')      #添加北京时间
             try:
-                table_obj.insert(date)
+                judge_run = True
+                table_obj.insert(date)        #写入数据
             except Exception as e:
-                print("重复=============")
-                print(e)
-            
+                pass
             # if not table_obj.find_one({dataType_obj["type"]:only_ID}):       #查询库中是否存在
             #     if not table_obj.insert(date):
             #         print("mongo：%s/%s写入%s:%s失败" % (site_name,table_name, dataType_obj["type"], only_ID))
@@ -218,8 +216,8 @@ class Collect_handle(object):
             #             self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType_obj["type"], only_ID),time)
             #         else:
             #             self.logs.write_acc("mongo：%s写入%s:%s成功" % (table_name, dataType_obj["type"], only_ID),time)
-        # if not judge_run:
-        #     print("无数据写入")
+        if not judge_run:
+            print("无数据写入")
         print("%s/%s文件执行完成" % (site_name, file_name))
     def get_web_num(self,username):
         req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
