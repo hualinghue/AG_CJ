@@ -30,8 +30,8 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="207" column="0" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+            <state relative-caret-position="475">
+              <caret line="193" column="50" lean-forward="true" selection-start-line="193" selection-start-column="50" selection-end-line="193" selection-end-column="50" />
               <folding>
                 <element signature="e#192#375#0" expanded="false" />
                 <element signature="e#418#811#0" expanded="false" />
@@ -45,8 +45,8 @@
                 <element signature="e#5049#5649#0" expanded="false" />
                 <element signature="e#5712#6552#0" expanded="false" />
                 <element signature="e#6598#7075#0" expanded="false" />
-                <element signature="e#9818#10004#0" expanded="false" />
-                <element signature="e#10046#10124#0" expanded="false" />
+                <element signature="e#9796#9982#0" expanded="false" />
+                <element signature="e#10024#10102#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -393,8 +393,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -424,8 +424,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -489,8 +489,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -529,8 +529,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -584,8 +584,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -709,8 +709,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="207" column="0" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+        <state relative-caret-position="475">
+          <caret line="193" column="50" lean-forward="true" selection-start-line="193" selection-start-column="50" selection-end-line="193" selection-end-column="50" />
           <folding>
             <element signature="e#192#375#0" expanded="false" />
             <element signature="e#418#811#0" expanded="false" />
@@ -724,8 +724,8 @@
             <element signature="e#5049#5649#0" expanded="false" />
             <element signature="e#5712#6552#0" expanded="false" />
             <element signature="e#6598#7075#0" expanded="false" />
-            <element signature="e#9818#10004#0" expanded="false" />
-            <element signature="e#10046#10124#0" expanded="false" />
+            <element signature="e#9796#9982#0" expanded="false" />
+            <element signature="e#10024#10102#0" expanded="false" />
           </folding>
         </state>
       </provider>
