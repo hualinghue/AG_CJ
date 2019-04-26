@@ -192,10 +192,7 @@ class Collect_handle(object):
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
             table_obj = self.mongo_obj[table_name]
-            if table_obj.count() == 0:
-                print(table_name,dataType_obj["type"])
-                table_obj.create_index({dataType_obj["type"]:1})
-                print("===================%s=======================" % table_name)
+
             MDtime = date[dataType_obj["time"]]           #获取时间
             BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
             date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')
@@ -207,6 +204,9 @@ class Collect_handle(object):
                     else:
                         self.logs.write_err("mongo：%s写入%s:%s失败" % (table_name, dataType_obj["type"], only_ID),time)
                 else:
+                    if table_obj.count() == 1:
+                        table_obj.create_index({dataType_obj["type"]: 1})
+                        print("===================%s=======================" % table_name)
                     judge_run = True
                     if proofread:
                         self.logs.proofread_acc("mongo：%s写入%s:%s成功" % ( table_name, dataType_obj["type"], only_ID),time)
