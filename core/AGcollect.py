@@ -132,7 +132,8 @@ class Collect_handle(object):
         else:
             time_list = self.get_ftp_path_file_name("/" + site_name)
             if time not in time_list or site_name not in self.all_site_name:
-                raise print("%s中无数据"%site_name)
+                self.logs.write_err("%s中无数据"%site_name,time)
+                return
             self.collect(site_name, time,proofread=True)  # 采集
     def download_file(self,file_name,site_name,time):
         ##下载FTP文件
