@@ -164,10 +164,7 @@ class Collect_handle(object):
             tmp_list = re.findall(' .*?=".*?"', str(line))
             for j in tmp_list:
                 key, value = j.split("=")
-                try:
-                    req_dic[key.replace(' ','')] = float(value.strip('"'))
-                except ValueError:
-                    req_dic[key.replace(' ', '')] = value.strip('"')
+                req_dic[key.replace(' ', '')] = value.strip('"')
             re_list.append(req_dic)
         return re_list
     def write_mongo(self,date_list,site_name,file_name,time,proofread=False):
@@ -186,6 +183,12 @@ class Collect_handle(object):
             elif web_num.isalpha():
                 continue
             dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型对象
+            for itme in dataType_obj["change"]:        #数据转换
+                change_data = date[itme]
+                if change_data == "type" or change_data == "flag":
+                    date[itme] = int(change_data)
+                else:
+                    date[itme] = float(change_data)
             playformType = date["platformType"]
             if date["dataType"] =="BR" and playformType == "YOPLAY":
                 table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
