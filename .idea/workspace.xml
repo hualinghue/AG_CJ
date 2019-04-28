@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="10f89f1e-81a9-4c62-9fb8-4224bdd973d6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/conf/settings.py" afterPath="$PROJECT_DIR$/conf/settings.py" />
       <change beforePath="$PROJECT_DIR$/core/AGcollect.py" afterPath="$PROJECT_DIR$/core/AGcollect.py" />
+      <change beforePath="$PROJECT_DIR$/core/AGcollect.py___jb_tmp___" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,8 +32,8 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="189" column="21" lean-forward="true" selection-start-line="189" selection-start-column="21" selection-end-line="189" selection-end-column="21" />
+            <state relative-caret-position="438">
+              <caret line="187" column="43" lean-forward="true" selection-start-line="187" selection-start-column="43" selection-end-line="187" selection-end-column="43" />
               <folding>
                 <element signature="e#192#375#0" expanded="false" />
                 <element signature="e#418#811#0" expanded="false" />
@@ -49,8 +49,8 @@
                 <element signature="e#5049#5685#0" expanded="false" />
                 <element signature="e#5748#6588#0" expanded="false" />
                 <element signature="e#6634#6976#0" expanded="false" />
-                <element signature="e#10129#10315#0" expanded="false" />
-                <element signature="e#10357#10435#0" expanded="false" />
+                <element signature="e#10254#10440#0" expanded="false" />
+                <element signature="e#10482#10560#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -136,7 +136,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="350" />
     <option name="y" value="55" />
     <option name="width" value="1382" />
@@ -271,7 +271,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -399,8 +399,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -432,8 +432,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -499,8 +499,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -541,8 +541,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -598,8 +598,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -722,8 +722,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="189" column="21" lean-forward="true" selection-start-line="189" selection-start-column="21" selection-end-line="189" selection-end-column="21" />
+        <state relative-caret-position="438">
+          <caret line="187" column="43" lean-forward="true" selection-start-line="187" selection-start-column="43" selection-end-line="187" selection-end-column="43" />
           <folding>
             <element signature="e#192#375#0" expanded="false" />
             <element signature="e#418#811#0" expanded="false" />
@@ -739,8 +739,8 @@
             <element signature="e#5049#5685#0" expanded="false" />
             <element signature="e#5748#6588#0" expanded="false" />
             <element signature="e#6634#6976#0" expanded="false" />
-            <element signature="e#10129#10315#0" expanded="false" />
-            <element signature="e#10357#10435#0" expanded="false" />
+            <element signature="e#10254#10440#0" expanded="false" />
+            <element signature="e#10482#10560#0" expanded="false" />
           </folding>
         </state>
       </provider>

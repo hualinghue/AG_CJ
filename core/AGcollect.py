@@ -185,7 +185,10 @@ class Collect_handle(object):
             dataType_obj = self.DATA_TYPE[date["dataType"]]         #获取数据类型对象
             for itme in dataType_obj["change"]:        #数据转换
                 change_data = date[itme]
-                if change_data == "type" or change_data == "flag":
+                if not change_data:continue
+                elif change_data == "null":
+                    date[itme] = 0
+                elif change_data == "type" or change_data == "flag":
                     date[itme] = int(change_data)
                 else:
                     date[itme] = float(change_data)
