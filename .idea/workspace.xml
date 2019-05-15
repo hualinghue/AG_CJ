@@ -30,8 +30,8 @@
       <file leaf-file-name="AGcollect.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="213" column="32" lean-forward="true" selection-start-line="213" selection-start-column="32" selection-end-line="213" selection-end-column="32" />
+            <state relative-caret-position="288">
+              <caret line="204" column="79" lean-forward="false" selection-start-line="204" selection-start-column="79" selection-end-line="204" selection-end-column="79" />
               <folding>
                 <element signature="e#192#375#0" expanded="false" />
                 <element signature="e#418#811#0" expanded="false" />
@@ -43,7 +43,7 @@
                 <element signature="e#5086#5722#0" expanded="false" />
                 <element signature="e#5785#6625#0" expanded="false" />
                 <element signature="e#6671#7013#0" expanded="false" />
-                <element signature="e#10466#10652#0" expanded="false" />
+                <element signature="e#10482#10668#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -62,7 +62,7 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
+            <state relative-caret-position="295">
               <caret line="17" column="50" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="50" />
               <folding />
             </state>
@@ -381,7 +381,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -409,7 +409,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -471,7 +471,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -508,7 +508,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -560,7 +560,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -668,7 +668,7 @@
     <entry file="file://Z:/Url_Thread.py" />
     <entry file="file://$PROJECT_DIR$/conf/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
+        <state relative-caret-position="295">
           <caret line="17" column="50" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="50" />
           <folding />
         </state>
@@ -684,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/AGcollect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="213" column="32" lean-forward="true" selection-start-line="213" selection-start-column="32" selection-end-line="213" selection-end-column="32" />
+        <state relative-caret-position="288">
+          <caret line="204" column="79" lean-forward="false" selection-start-line="204" selection-start-column="79" selection-end-line="204" selection-end-column="79" />
           <folding>
             <element signature="e#192#375#0" expanded="false" />
             <element signature="e#418#811#0" expanded="false" />
@@ -697,7 +697,7 @@
             <element signature="e#5086#5722#0" expanded="false" />
             <element signature="e#5785#6625#0" expanded="false" />
             <element signature="e#6671#7013#0" expanded="false" />
-            <element signature="e#10466#10652#0" expanded="false" />
+            <element signature="e#10482#10668#0" expanded="false" />
           </folding>
         </state>
       </provider>
