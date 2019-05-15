@@ -203,7 +203,10 @@ class Collect_handle(object):
             if table_obj.count() == 0:              #获取索引
                 table_obj.ensure_index(dataType_obj["type"], unique=True)
             MDtime = date[dataType_obj["time"]]           #获取时间
-            BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
+            try:
+                BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
+            except Exception :
+                print(MDtime)
             date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')      #添加北京时间
             try:
                 judge_run = True
