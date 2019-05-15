@@ -205,9 +205,10 @@ class Collect_handle(object):
             MDtime = date[dataType_obj["time"]]           #获取时间
             try:
                 BJtime = datetime.datetime.strptime(MDtime, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=12)
+                date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')  # 添加北京时间
+
             except Exception :
-                print(MDtime)
-            date["bjTime"] = BJtime.strftime('%Y-%m-%d %H:%M:%S')      #添加北京时间
+                print("======================================"+MDtime+"+++++++++++++++++++")
             try:
                 judge_run = True
                 table_obj.insert(date)        #写入数据
