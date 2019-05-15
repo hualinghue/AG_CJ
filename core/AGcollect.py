@@ -209,6 +209,7 @@ class Collect_handle(object):
 
             except Exception :
                 print("======================================"+MDtime+"+++++++++++++++++++")
+                print(date)
             try:
                 judge_run = True
                 table_obj.insert(date)        #写入数据
