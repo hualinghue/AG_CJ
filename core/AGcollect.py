@@ -194,7 +194,7 @@ class Collect_handle(object):
                 else:
                     date[itme] = float(change_data)
             playformType = date["platformType"]
-            table_name = ""
+            table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             if date["dataType"] =="BR":
                 if playformType == "YOPLAY":
                     table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
@@ -210,8 +210,7 @@ class Collect_handle(object):
                         table_name = "AG_EBR_%s" % web_num
                     else:
                         table_name = "AG_BR_%s" % web_num
-            else:
-                table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
+
             # only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
             table_obj = self.mongo_obj[table_name]
             if table_obj.count() == 0:              #获取索引
