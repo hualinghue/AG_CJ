@@ -212,6 +212,7 @@ class Collect_handle(object):
             else:
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             # only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
+            print(table_name)
             table_obj = self.mongo_obj[table_name]
             if table_obj.count() == 0:              #获取索引
                 table_obj.ensure_index(dataType_obj["type"], unique=True)
