@@ -205,7 +205,6 @@ class Collect_handle(object):
                 elif date["platformType"] =="PT":
                     dbobj = self.mongo_obj["AG_gameType"]
                     num = dbobj.count({'plat':'PT','type':'egame','code':date['gameType']})
-                    print(num)
                     if num >0:
                         table_name = "AG_EBR_%s" % web_num
                     else:
