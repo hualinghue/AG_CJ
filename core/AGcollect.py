@@ -194,8 +194,19 @@ class Collect_handle(object):
                 else:
                     date[itme] = float(change_data)
             playformType = date["platformType"]
-            if date["dataType"] =="BR" and playformType == "YOPLAY":
-                table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
+            if date["dataType"] =="BR":
+                if playformType == "YOPLAY":
+                    table_name = "AG_YOBR_%s" % web_num  # 拼接集合表名
+                elif date["platformType"] =="BBIN" and date['gameType'].startswith('5'):
+                    table_name = "AG_EBR_%s" %  web_num
+                elif date["platformType"] =="MG" and not date['gameType'].startswith("Live Games"):
+                    table_name = "AG_EBR_%s" % web_num
+                elif date["platformType"] =="PT":
+                    dbobj = self.mongo_obj["AG_gameType"]
+                    num = dbobj.count({'plat':'PT','type':'egame','code':date['gameType']})
+                    print(num)
+                    if num >0:
+                        table_name = "AG_EBR_%s" % web_num
             else:
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             # only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
