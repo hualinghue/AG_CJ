@@ -207,6 +207,8 @@ class Collect_handle(object):
                     print(num)
                     if num >0:
                         table_name = "AG_EBR_%s" % web_num
+                    else:
+                        table_name = "AG_BR_%s" % web_num
             else:
                 table_name = "AG_%s_%s" % (date["dataType"], web_num)  # 拼接集合表名
             # only_ID = date[dataType_obj["type"]]                            #获取数据的唯一键
