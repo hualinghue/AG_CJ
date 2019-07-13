@@ -151,6 +151,7 @@ class Collect_handle(object):
                 return False
         with open("%s/%s" % (file_path, file_name), "r") as f:
             file_line = f.readlines()       #查看下载是否成功
+            print(len(file_line),file_name)
             if file_line:
                 return self.analyze_xml(file_line)
             else:
@@ -254,3 +255,25 @@ class Collect_handle(object):
         """获取所有平台的名字"""
         self.all_site_name =  self.get_ftp_path_file_name("/")
 
+def analyze_xml(file_list):
+    ##解析xml数据
+    re_list = []
+    for line in file_list:
+        req_dic = {}
+        tmp_list = re.findall(' .*?=".*?"', str(line))
+        for j in tmp_list:
+            key, value = j.split("=")
+            req_dic[key.replace(' ', '')] = value.strip('"')
+        re_list.append(req_dic)
+    return re_list
+def get_web_num(username):
+    req_name = re.search(r"[m|M]12(\d\d\d)",username) or re.search(r"[m|M]12(hg|HG)",username)
+    if req_name:
+        return req_name.group(1)
+    else:
+        return None
+a=['<row dataType="BR"  billNo="190523237021970" playerName="M12002mp5678" agentCode="A0B001001001001" gameCode="GB002195231F6" netAmount="50" betTime="2019-05-23 23:50:33" gameType="BAC" betAmount="50" validBetAmount="50" flag="1" playType="2" currency="CNY" tableCode="B002" loginIP="117.136.8.15" recalcuTime="2019-05-23 23:50:48" platformType="AGIN" remark="" round="AGQ" result="" beforeCredit="231" deviceType="1" />']
+b=analyze_xml(a)
+c=get_web_num(b[0]['playerName'])
+
+print(c)
