@@ -151,7 +151,7 @@ class Collect_handle(object):
                 return False
         with open("%s/%s" % (file_path, file_name), "r") as f:
             file_line = f.readlines()       #查看下载是否成功
-            print(len(file_line),file_name)
+            print(file_line,file_name)
             if file_line:
                 return self.analyze_xml(file_line)
             else:
